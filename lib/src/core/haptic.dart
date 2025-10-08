@@ -12,4 +12,10 @@ class AppHaptic {
       Haptics.vibrate(HapticsType.medium);
     }
   }
+
+  static successPressed() {
+    if (_canVibrate) {
+      Haptics.vibrate(HapticsType.success);
+    }
+  }
 }

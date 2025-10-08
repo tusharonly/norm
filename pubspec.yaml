@@ -13,9 +13,10 @@ dependencies:
     sdk: flutter
   haptic_feedback: ^0.5.1+1
   hive_flutter: ^1.1.0
-  keyboard_emoji_picker: ^1.0.3
+  intl: ^0.20.2
   lucide_icons_flutter: ^3.1.1
   provider: ^6.1.5+1
+  uuid: ^4.5.1
 
 dev_dependencies:
   flutter_test:

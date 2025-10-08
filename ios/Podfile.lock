@@ -1,53 +1,28 @@
 PODS:
-  - emoji_keyboard_flutter (1.4.0):
-    - Flutter
   - Flutter (1.0.0)
-  - flutter_keyboard_visibility (0.0.1):
-    - Flutter
   - haptic_feedback (0.5.1):
-    - Flutter
-  - keyboard_emoji_picker (0.0.1):
     - Flutter
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
-  - sqflite_darwin (0.0.4):
-    - Flutter
-    - FlutterMacOS
 
 DEPENDENCIES:
-  - emoji_keyboard_flutter (from `.symlinks/plugins/emoji_keyboard_flutter/ios`)
   - Flutter (from `Flutter`)
-  - flutter_keyboard_visibility (from `.symlinks/plugins/flutter_keyboard_visibility/ios`)
   - haptic_feedback (from `.symlinks/plugins/haptic_feedback/ios`)
-  - keyboard_emoji_picker (from `.symlinks/plugins/keyboard_emoji_picker/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
-  - sqflite_darwin (from `.symlinks/plugins/sqflite_darwin/darwin`)
 
 EXTERNAL SOURCES:
-  emoji_keyboard_flutter:
-    :path: ".symlinks/plugins/emoji_keyboard_flutter/ios"
   Flutter:
     :path: Flutter
-  flutter_keyboard_visibility:
-    :path: ".symlinks/plugins/flutter_keyboard_visibility/ios"
   haptic_feedback:
     :path: ".symlinks/plugins/haptic_feedback/ios"
-  keyboard_emoji_picker:
-    :path: ".symlinks/plugins/keyboard_emoji_picker/ios"
   path_provider_foundation:
     :path: ".symlinks/plugins/path_provider_foundation/darwin"
-  sqflite_darwin:
-    :path: ".symlinks/plugins/sqflite_darwin/darwin"
 
 SPEC CHECKSUMS:
-  emoji_keyboard_flutter: b32137b9b58bf9fd73037312fc6c0102f39a7619
   Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
-  flutter_keyboard_visibility: 4625131e43015dbbe759d9b20daaf77e0e3f6619
   haptic_feedback: fd1d8509833f58f164fc12122c0357fa9b2750e0
-  keyboard_emoji_picker: 8bb10a5a1dc78df58d79a2d95394f9f8e3c1371a
   path_provider_foundation: 080d55be775b7414fd5a5ef3ac137b97b097e564
-  sqflite_darwin: 20b2a3a3b70e43edae938624ce550a3cbf66a3d0
 
 PODFILE CHECKSUM: 3c63482e143d1b91d2d2560aee9fb04ecc74ac7e
 

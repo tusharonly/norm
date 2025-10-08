@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:norm/src/core/haptic.dart';
+import 'package:norm/src/theme.dart';
 
 class ColorPickerRow extends StatefulWidget {
   const ColorPickerRow({
@@ -16,21 +17,6 @@ class ColorPickerRow extends StatefulWidget {
 }
 
 class _ColorPickerRowState extends State<ColorPickerRow> {
-  final List<Color> colors = [
-    Colors.redAccent,
-    Colors.deepOrangeAccent,
-    Colors.orangeAccent,
-    Colors.yellowAccent,
-    Colors.greenAccent,
-    Colors.lightGreenAccent,
-    Colors.cyanAccent,
-    Colors.lightBlueAccent,
-    Colors.purpleAccent,
-    Colors.indigoAccent,
-    Colors.pinkAccent,
-    Colors.deepPurpleAccent,
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -44,15 +30,17 @@ class _ColorPickerRowState extends State<ColorPickerRow> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 for (var color
-                    in index == 0 ? colors.sublist(0, 6) : colors.sublist(6))
+                    in index == 0
+                        ? AppColors.habitColors.sublist(0, 4)
+                        : AppColors.habitColors.sublist(4))
                   GestureDetector(
                     onTap: () {
                       AppHaptic.buttonPressed();
                       widget.onColorSelected(color);
                     },
                     child: Container(
-                      width: 40,
-                      height: 40,
+                      width: 50,
+                      height: 50,
                       decoration: BoxDecoration(
                         color: color,
                         shape: BoxShape.circle,
@@ -60,8 +48,8 @@ class _ColorPickerRowState extends State<ColorPickerRow> {
                       child: widget.selectedColor == color
                           ? Center(
                               child: Container(
-                                width: 16,
-                                height: 16,
+                                width: 20,
+                                height: 20,
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                   shape: BoxShape.circle,
