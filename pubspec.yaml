@@ -1,0 +1,41 @@
+name: norm
+description: "Norm: Habit tracker"
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.9.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+  haptic_feedback: ^0.5.1+1
+  hive_flutter: ^1.1.0
+  keyboard_emoji_picker: ^1.0.3
+  lucide_icons_flutter: ^3.1.1
+  provider: ^6.1.5+1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
+
+  # assets:
+  #   - images/a_dot_burr.jpeg
+
+  fonts:
+    - family: Figtree
+      fonts:
+        - asset: fonts/Figtree-Regular.ttf
+        - asset: fonts/Figtree-Medium.ttf
+        - asset: fonts/Figtree-SemiBold.ttf
+        - asset: fonts/Figtree-Bold.ttf
+        - asset: fonts/Figtree-ExtraBold.ttf
+        - asset: fonts/Figtree-Black.ttf
+        - asset: fonts/Figtree-Light.ttf
