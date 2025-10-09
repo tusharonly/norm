@@ -17,6 +17,12 @@ class HabitsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> editHabit(HabitModel habit) async {
+    habits[habit.id] = habit;
+    AppDatabase.saveHabit(habits[habit.id]!);
+    notifyListeners();
+  }
+
   Future<void> toggleHabitDone({
     required String id,
     required DateTime date,
