@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:norm/src/core/extensions.dart';
+import 'package:norm/src/core/database.dart';
 import 'package:norm/src/models/habit_model.dart';
+import 'package:norm/src/utils/extensions.dart';
 import 'package:uuid/uuid.dart';
 
 class HabitsProvider extends ChangeNotifier {
-  final habits = <String, HabitModel>{};
+  final habits = AppDatabase.getHabits();
 
   Future<void> createHabit({
     required String name,
@@ -12,6 +13,7 @@ class HabitsProvider extends ChangeNotifier {
   }) async {
     final id = Uuid().v4();
     habits[id] = HabitModel(id: id, name: name, color: color);
+    AppDatabase.saveHabit(habits[id]!);
     notifyListeners();
   }
 
@@ -30,6 +32,7 @@ class HabitsProvider extends ChangeNotifier {
         history: [...habits[id]!.history, date.onlydate],
       );
     }
+    AppDatabase.saveHabit(habits[id]!);
     notifyListeners();
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:norm/src/core/haptic.dart';
+import 'package:norm/src/utils/haptic.dart';
 import 'package:norm/src/theme.dart';
 
 class ColorPickerRow extends StatefulWidget {

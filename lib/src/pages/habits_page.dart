@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
-import 'package:norm/src/core/extensions.dart';
-import 'package:norm/src/core/haptic.dart';
+import 'package:norm/src/utils/extensions.dart';
+import 'package:norm/src/utils/haptic.dart';
 import 'package:norm/src/pages/create_habit_page.dart';
 import 'package:norm/src/providers/habits_provider.dart';
 import 'package:norm/src/router.dart';
@@ -38,6 +38,7 @@ class HabitsPage extends StatelessWidget {
             },
             icon: Icon(LucideIcons.plus, color: Colors.black),
           ),
+          SizedBox(width: 8),
         ],
       ),
 
@@ -55,14 +56,18 @@ class HabitsPage extends StatelessWidget {
             );
           }
           return Padding(
-            padding: const EdgeInsets.only(top: 16.0, left: 16.0, bottom: 16.0),
+            padding: const EdgeInsets.only(
+              top: 16.0,
+              left: 16.0,
+              bottom: 16.0,
+              right: 16.0,
+            ),
             child: Column(
               children: [
                 Row(
-                  spacing: 16,
                   children: [
                     Expanded(
-                      flex: 2,
+                      flex: 3,
                       child: Text(
                         '',
                         style: TextStyle(fontSize: 16),
@@ -121,10 +126,9 @@ class HabitsPage extends StatelessWidget {
                         final habit = hp.habits.values.toList()[index];
 
                         return Row(
-                          spacing: 16,
                           children: [
                             Expanded(
-                              flex: 2,
+                              flex: 3,
                               child: Text(
                                 habit.name,
                                 style: TextStyle(
@@ -168,11 +172,11 @@ class HabitsPage extends StatelessWidget {
                                             child: Center(
                                               child: AnimatedContainer(
                                                 duration: Duration(
-                                                  milliseconds: 500,
+                                                  milliseconds: 400,
                                                 ),
-                                                curve: Curves.elasticOut,
-                                                width: isDone ? 20 : 10,
-                                                height: isDone ? 20 : 10,
+                                                curve: Curves.elasticInOut,
+                                                width: isDone ? 18 : 8,
+                                                height: isDone ? 19 : 8,
                                                 decoration: BoxDecoration(
                                                   color: habit.color.withAlpha(
                                                     isDone ? 255 : 255 ~/ 2,

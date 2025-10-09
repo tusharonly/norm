@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
-import 'package:norm/src/core/haptic.dart';
+import 'package:norm/src/utils/haptic.dart';
 import 'package:norm/src/providers/habits_provider.dart';
 import 'package:norm/src/router.dart';
 import 'package:norm/src/theme.dart';
