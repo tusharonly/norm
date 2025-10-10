@@ -2,10 +2,10 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
-import 'package:norm/src/utils/haptic.dart';
 import 'package:norm/src/providers/habits_provider.dart';
 import 'package:norm/src/router.dart';
 import 'package:norm/src/theme.dart';
+import 'package:norm/src/utils/haptic.dart';
 import 'package:norm/src/widgets/color_picker_row.dart';
 import 'package:provider/provider.dart';
 
@@ -105,7 +105,7 @@ class _CreateHabitPageState extends State<CreateHabitPage> {
                       disabledBorder: inputBorder,
                       focusedErrorBorder: inputBorder,
                       filled: true,
-                      fillColor: Theme.of(context).colorScheme.surfaceContainer,
+                      fillColor: AppColors.cardBackgroundColor,
                     ),
                     textCapitalization: TextCapitalization.sentences,
                   ),

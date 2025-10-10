@@ -27,6 +27,12 @@ class NormApp extends StatelessWidget {
           color: AppColors.primaryTextColor,
         ),
       ),
+      cardTheme: CardThemeData(
+        color: AppColors.cardBackgroundColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30.0),
+        ),
+      ),
     );
     return MaterialApp(
       home: const HabitsPage(),

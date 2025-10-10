@@ -19,14 +19,18 @@ class HabitsPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Habits'),
         actions: [
-          IconButton.filledTonal(
+          IconButton(
+            style: IconButton.styleFrom(
+              backgroundColor: AppColors.cardBackgroundColor,
+            ),
             onPressed: () {
               AppHaptic.buttonPressed();
             },
+            iconSize: 20,
             icon: Icon(LucideIcons.settings),
           ),
           SizedBox(width: 4),
-          IconButton.filledTonal(
+          IconButton(
             style: IconButton.styleFrom(
               backgroundColor: AppColors.primaryColor,
               shape: RoundedRectangleBorder(

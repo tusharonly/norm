@@ -7,6 +7,7 @@ class AppColors {
   static const secondaryTextColor = Colors.grey;
   static const dangerColor = Colors.redAccent;
   static const successColor = Colors.greenAccent;
+  static const cardBackgroundColor = Color(0xFF1a1a1a);
 
   static const List<Color> habitColors = [
     Color(0xFFfbcaa7),
