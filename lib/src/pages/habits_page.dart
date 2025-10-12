@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:norm/src/pages/create_habit_page.dart';
 import 'package:norm/src/pages/edit_habit_page.dart';
+import 'package:norm/src/pages/settings_page.dart';
 import 'package:norm/src/providers/habits_provider.dart';
 import 'package:norm/src/router.dart';
 import 'package:norm/src/theme.dart';
@@ -25,6 +26,7 @@ class HabitsPage extends StatelessWidget {
             ),
             onPressed: () {
               AppHaptic.buttonPressed();
+              AppRouter.push(SettingsPage());
             },
             iconSize: 20,
             icon: Icon(LucideIcons.settings),
