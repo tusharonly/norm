@@ -2,7 +2,7 @@
 
 ![GitHub release (with filter)](https://img.shields.io/github/v/release/tusharonly/norm)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
-![GitHub Downloads](https://img.shields.io/github/downloads/tusharonly/Norm/total)
+![GitHub Downloads](https://img.shields.io/github/downloads/tusharonly/norm/total)
 ![GitHub Repo stars](https://img.shields.io/github/stars/tusharonly/norm)
 
 # Norm - Minimal Habit Tracker
