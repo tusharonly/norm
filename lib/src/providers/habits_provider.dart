@@ -41,4 +41,10 @@ class HabitsProvider extends ChangeNotifier {
     AppDatabase.saveHabit(habits[id]!);
     notifyListeners();
   }
+
+  Future<void> deleteHabit(String id) async {
+    habits.remove(id);
+    AppDatabase.deleteHabit(id);
+    notifyListeners();
+  }
 }

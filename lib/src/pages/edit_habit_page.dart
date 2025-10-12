@@ -39,6 +39,65 @@ class _EditHabitPageState extends State<EditHabitPage> {
     AppRouter.pop();
   }
 
+  void deleteHabit() {
+    AppHaptic.buttonPressed();
+    context.read<HabitsProvider>().deleteHabit(widget.habit.id);
+    AppRouter.pop();
+  }
+
+  void showDeleteConfirmationDialog() {
+    AppHaptic.buttonPressed();
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: AppColors.cardBackgroundColor,
+          title: Text(
+            'Delete Habit',
+            style: TextStyle(
+              color: AppColors.primaryTextColor,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          content: Text(
+            'Are you sure you want to delete "${widget.habit.name}"? This action cannot be undone.',
+            style: TextStyle(
+              color: AppColors.secondaryTextColor,
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                AppHaptic.buttonPressed();
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                'Cancel',
+                style: TextStyle(
+                  color: AppColors.secondaryTextColor,
+                ),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                AppHaptic.successPressed();
+                Navigator.of(context).pop();
+                deleteHabit();
+              },
+              child: Text(
+                'Delete',
+                style: TextStyle(
+                  color: AppColors.dangerColor,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   void initState() {
     habitNameController.text = widget.habit.name;
@@ -58,7 +117,7 @@ class _EditHabitPageState extends State<EditHabitPage> {
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Edit Habit"),
+          title: Text(widget.habit.name),
           centerTitle: true,
           leading: IconButton(
             icon: Icon(LucideIcons.x, color: Colors.white),
@@ -71,6 +130,17 @@ class _EditHabitPageState extends State<EditHabitPage> {
           actions: [
             IconButton.filledTonal(
               style: IconButton.styleFrom(
+                backgroundColor: AppColors.dangerColor,
+              ),
+              icon: Icon(
+                LucideIcons.trash2,
+                color: Colors.white,
+              ),
+              onPressed: showDeleteConfirmationDialog,
+            ),
+            SizedBox(width: 8),
+            IconButton.filledTonal(
+              style: IconButton.styleFrom(
                 backgroundColor: AppColors.successColor,
               ),
               icon: Icon(
@@ -79,6 +149,7 @@ class _EditHabitPageState extends State<EditHabitPage> {
               ),
               onPressed: habitName.isNotEmpty ? editHabit : null,
             ),
+            SizedBox(width: 8),
           ],
         ),
         body: SingleChildScrollView(

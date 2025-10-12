@@ -2,6 +2,8 @@ PODS:
   - Flutter (1.0.0)
   - haptic_feedback (0.5.1):
     - Flutter
+  - native_dialog_plus (0.0.1):
+    - Flutter
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
@@ -9,6 +11,7 @@ PODS:
 DEPENDENCIES:
   - Flutter (from `Flutter`)
   - haptic_feedback (from `.symlinks/plugins/haptic_feedback/ios`)
+  - native_dialog_plus (from `.symlinks/plugins/native_dialog_plus/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
 
 EXTERNAL SOURCES:
@@ -16,12 +19,15 @@ EXTERNAL SOURCES:
     :path: Flutter
   haptic_feedback:
     :path: ".symlinks/plugins/haptic_feedback/ios"
+  native_dialog_plus:
+    :path: ".symlinks/plugins/native_dialog_plus/ios"
   path_provider_foundation:
     :path: ".symlinks/plugins/path_provider_foundation/darwin"
 
 SPEC CHECKSUMS:
   Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
   haptic_feedback: fd1d8509833f58f164fc12122c0357fa9b2750e0
+  native_dialog_plus: 6579cb8aa89a9866649c821ca42557f514f31e3f
   path_provider_foundation: 080d55be775b7414fd5a5ef3ac137b97b097e564
 
 PODFILE CHECKSUM: 3c63482e143d1b91d2d2560aee9fb04ecc74ac7e

@@ -62,6 +62,7 @@ class _CreateHabitPageState extends State<CreateHabitPage> {
             ),
             onPressed: habitName.isNotEmpty ? createHabit : null,
           ),
+          SizedBox(width: 8),
         ],
       ),
       body: SingleChildScrollView(
