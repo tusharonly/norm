@@ -55,15 +55,21 @@ class _SettingsPageState extends State<SettingsPage> {
                 _buildSettingsTile(
                   icon: LucideIcons.bug,
                   title: 'Report an Issue',
-                  subtitle: 'Help us improve the app',
+                  subtitle: 'Help me improve the app',
                   onTap: () =>
                       _launchUrl('https://github.com/tusharonly/Norm/issues'),
                 ),
                 _buildSettingsTile(
                   icon: LucideIcons.github,
                   title: 'Follow on GitHub',
-                  subtitle: 'Stay updated with development',
+                  subtitle: '@tusharonly',
                   onTap: () => _launchUrl('https://github.com/tusharonly'),
+                ),
+                _buildSettingsTile(
+                  icon: LucideIcons.twitter,
+                  title: 'Follow on X (Twitter)',
+                  subtitle: '@vibetushar',
+                  onTap: () => _launchUrl('https://x.com/vibetushar'),
                 ),
                 _buildSettingsTile(
                   icon: LucideIcons.externalLink,
@@ -134,7 +140,7 @@ class _SettingsPageState extends State<SettingsPage> {
         width: 40,
         height: 40,
         decoration: BoxDecoration(
-          color: AppColors.primaryColor.withOpacity(0.1),
+          color: AppColors.primaryColor.withAlpha(20),
           borderRadius: BorderRadius.circular(8),
         ),
         child: Icon(
@@ -180,7 +186,7 @@ class _SettingsPageState extends State<SettingsPage> {
         width: 40,
         height: 40,
         decoration: BoxDecoration(
-          color: AppColors.primaryColor.withOpacity(0.1),
+          color: AppColors.primaryColor.withAlpha(20),
           borderRadius: BorderRadius.circular(8),
         ),
         child: Icon(
