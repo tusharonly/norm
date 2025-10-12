@@ -12,3 +12,5 @@ Norm is a minimal habit tracker that focuses on quick daily logging. The home sc
 It is completely ad-free and open source.
 
 Built using the [Flutter](https://flutter.dev/) framework, a popular and powerful cross-platform development tool.
+
+# 🟥 App is under developemet
