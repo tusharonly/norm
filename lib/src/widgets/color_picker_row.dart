@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:norm/src/utils/haptic.dart';
 import 'package:norm/src/theme.dart';
 
 class ColorPickerRow extends StatefulWidget {
@@ -35,7 +34,6 @@ class _ColorPickerRowState extends State<ColorPickerRow> {
                         : AppColors.habitColors.sublist(4))
                   GestureDetector(
                     onTap: () {
-                      AppHaptic.buttonPressed();
                       widget.onColorSelected(color);
                     },
                     child: Container(

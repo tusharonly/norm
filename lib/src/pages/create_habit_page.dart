@@ -5,7 +5,6 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:norm/src/providers/habits_provider.dart';
 import 'package:norm/src/router.dart';
 import 'package:norm/src/theme.dart';
-import 'package:norm/src/utils/haptic.dart';
 import 'package:norm/src/widgets/color_picker_row.dart';
 import 'package:provider/provider.dart';
 
@@ -24,7 +23,6 @@ class _CreateHabitPageState extends State<CreateHabitPage> {
   String habitName = '';
 
   void createHabit() {
-    AppHaptic.successPressed();
     context.read<HabitsProvider>().createHabit(
       name: habitName,
       color: selectedColor,
@@ -46,7 +44,6 @@ class _CreateHabitPageState extends State<CreateHabitPage> {
         leading: IconButton(
           icon: Icon(LucideIcons.x, color: Colors.white),
           onPressed: () {
-            AppHaptic.buttonPressed();
             AppRouter.pop();
           },
         ),

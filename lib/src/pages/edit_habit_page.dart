@@ -6,7 +6,6 @@ import 'package:norm/src/models/habit_model.dart';
 import 'package:norm/src/providers/habits_provider.dart';
 import 'package:norm/src/router.dart';
 import 'package:norm/src/theme.dart';
-import 'package:norm/src/utils/haptic.dart';
 import 'package:norm/src/widgets/activity_calender.dart';
 import 'package:norm/src/widgets/color_picker_row.dart';
 import 'package:provider/provider.dart';
@@ -29,7 +28,6 @@ class _EditHabitPageState extends State<EditHabitPage> {
   final habitNameController = TextEditingController();
 
   void editHabit() {
-    AppHaptic.successPressed();
     context.read<HabitsProvider>().editHabit(
       widget.habit.copyWith(
         name: habitName,
@@ -40,13 +38,11 @@ class _EditHabitPageState extends State<EditHabitPage> {
   }
 
   void deleteHabit() {
-    AppHaptic.buttonPressed();
     context.read<HabitsProvider>().deleteHabit(widget.habit.id);
     AppRouter.pop();
   }
 
   void showDeleteConfirmationDialog() {
-    AppHaptic.buttonPressed();
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -68,7 +64,6 @@ class _EditHabitPageState extends State<EditHabitPage> {
           actions: [
             TextButton(
               onPressed: () {
-                AppHaptic.buttonPressed();
                 Navigator.of(context).pop();
               },
               child: Text(
@@ -80,7 +75,6 @@ class _EditHabitPageState extends State<EditHabitPage> {
             ),
             TextButton(
               onPressed: () {
-                AppHaptic.successPressed();
                 Navigator.of(context).pop();
                 deleteHabit();
               },
@@ -122,7 +116,6 @@ class _EditHabitPageState extends State<EditHabitPage> {
           leading: IconButton(
             icon: Icon(LucideIcons.x, color: Colors.white),
             onPressed: () {
-              AppHaptic.buttonPressed();
               AppRouter.pop();
             },
           ),

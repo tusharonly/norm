@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:norm/src/utils/haptic.dart';
 
 class FAB extends StatelessWidget {
   const FAB({
@@ -17,7 +16,6 @@ class FAB extends StatelessWidget {
   Widget build(BuildContext context) {
     return FloatingActionButton(
       onPressed: () {
-        AppHaptic.buttonPressed();
         onPressed?.call();
       },
       backgroundColor: backgroundColor,

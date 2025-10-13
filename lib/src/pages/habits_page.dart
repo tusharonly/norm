@@ -8,7 +8,6 @@ import 'package:norm/src/providers/habits_provider.dart';
 import 'package:norm/src/router.dart';
 import 'package:norm/src/theme.dart';
 import 'package:norm/src/utils/extensions.dart';
-import 'package:norm/src/utils/haptic.dart';
 import 'package:provider/provider.dart';
 
 class HabitsPage extends StatelessWidget {
@@ -25,7 +24,6 @@ class HabitsPage extends StatelessWidget {
               backgroundColor: AppColors.cardBackgroundColor,
             ),
             onPressed: () {
-              AppHaptic.buttonPressed();
               AppRouter.push(SettingsPage());
             },
             iconSize: 20,
@@ -40,7 +38,6 @@ class HabitsPage extends StatelessWidget {
               ),
             ),
             onPressed: () {
-              AppHaptic.buttonPressed();
               AppRouter.push(CreateHabitPage(), fullscreenDialog: true);
             },
             icon: Icon(LucideIcons.plus, color: Colors.black),
@@ -143,7 +140,6 @@ class HabitsPage extends StatelessWidget {
                               hoverColor: Colors.transparent,
                               focusColor: Colors.transparent,
                               onTap: () {
-                                AppHaptic.buttonPressed();
                                 AppRouter.push(
                                   EditHabitPage(habit: habit),
                                   fullscreenDialog: true,
@@ -182,7 +178,6 @@ class HabitsPage extends StatelessWidget {
                                         hoverColor: Colors.transparent,
                                         focusColor: Colors.transparent,
                                         onTap: () {
-                                          AppHaptic.successPressed();
                                           hp.toggleHabitDone(
                                             id: habit.id,
                                             date: date,

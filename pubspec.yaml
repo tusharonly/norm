@@ -11,7 +11,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  haptic_feedback: ^0.5.1+1
   hive_flutter: ^1.1.0
   intl: ^0.20.2
   lucide_icons_flutter: ^3.1.1
