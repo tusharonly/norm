@@ -11,7 +11,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  hive_flutter: ^1.1.0
+  hive_ce_flutter: ^2.3.2
   intl: ^0.20.2
   lucide_icons_flutter: ^3.1.1
   package_info_plus: ^8.0.2
