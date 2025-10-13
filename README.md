@@ -1,6 +1,3 @@
-<br/>
-<br/>
-
 # Norm - Habit Tracker
 
 <p>
