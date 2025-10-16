@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:norm/src/pages/habits_page.dart';
+import 'package:norm/src/pages/home_page.dart';
 import 'package:norm/src/router.dart';
 import 'package:norm/src/theme.dart';
 
@@ -35,7 +35,7 @@ class NormApp extends StatelessWidget {
       ),
     );
     return MaterialApp(
-      home: const HabitsPage(),
+      home: const HomePage(),
       theme: theme,
       debugShowCheckedModeBanner: false,
       navigatorKey: AppRouter.navigatorKey,

@@ -1,35 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
-import 'package:norm/src/pages/create_habit_page.dart';
-import 'package:norm/src/pages/edit_habit_page.dart';
+import 'package:norm/src/pages/create_or_edit_habit_page.dart';
+import 'package:norm/src/pages/habit_details_page.dart';
 import 'package:norm/src/pages/settings_page.dart';
 import 'package:norm/src/providers/habits_provider.dart';
 import 'package:norm/src/router.dart';
 import 'package:norm/src/theme.dart';
-import 'package:norm/src/utils/extensions.dart';
 import 'package:provider/provider.dart';
 
-class HabitsPage extends StatelessWidget {
-  const HabitsPage({super.key});
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Habits'),
-        actions: [
-          IconButton(
-            style: IconButton.styleFrom(
-              backgroundColor: AppColors.cardBackgroundColor,
-            ),
-            onPressed: () {
-              AppRouter.push(SettingsPage());
-            },
-            iconSize: 20,
-            icon: Icon(LucideIcons.settings),
+        leading: IconButton(
+          style: IconButton.styleFrom(
+            backgroundColor: AppColors.cardBackgroundColor,
           ),
-          SizedBox(width: 4),
+          onPressed: () {
+            AppRouter.push(SettingsPage());
+          },
+          iconSize: 20,
+          icon: Icon(LucideIcons.settings),
+        ),
+        titleSpacing: 0,
+        actions: [
           IconButton(
             style: IconButton.styleFrom(
               backgroundColor: AppColors.primaryColor,
@@ -38,7 +37,7 @@ class HabitsPage extends StatelessWidget {
               ),
             ),
             onPressed: () {
-              AppRouter.push(CreateHabitPage(), fullscreenDialog: true);
+              AppRouter.push(CreateOrEditHabitPage(), fullscreenDialog: true);
             },
             icon: Icon(LucideIcons.plus, color: Colors.black),
           ),
@@ -123,7 +122,7 @@ class HabitsPage extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: 16),
                 Column(
                   children: List.generate(
                     hp.habits.length,
@@ -141,7 +140,7 @@ class HabitsPage extends StatelessWidget {
                               focusColor: Colors.transparent,
                               onTap: () {
                                 AppRouter.push(
-                                  EditHabitPage(habit: habit),
+                                  HabitDetailsPage(habit: habit),
                                   fullscreenDialog: true,
                                 );
                               },
@@ -168,8 +167,8 @@ class HabitsPage extends StatelessWidget {
                                       final date = DateTime.now().subtract(
                                         Duration(days: 6 - index),
                                       );
-                                      final isDone = habit.history.contains(
-                                        date.onlydate,
+                                      final isDone = habit.isCompletedForDate(
+                                        date,
                                       );
 
                                       return InkWell(

@@ -9,10 +9,17 @@ class HabitsProvider extends ChangeNotifier {
 
   Future<void> createHabit({
     required String name,
+    required String description,
     required Color color,
   }) async {
     final id = Uuid().v4();
-    habits[id] = HabitModel(id: id, name: name, color: color);
+    habits[id] = HabitModel(
+      id: id,
+      name: name,
+      description: description,
+      color: color,
+      order: habits.length,
+    );
     AppDatabase.saveHabit(habits[id]!);
     notifyListeners();
   }
@@ -27,17 +34,18 @@ class HabitsProvider extends ChangeNotifier {
     required String id,
     required DateTime date,
   }) async {
-    if (habits[id]!.history.contains(date.onlydate)) {
-      habits[id] = habits[id]!.copyWith(
-        history: habits[id]!.history
-            .where((element) => element != date.onlydate)
-            .toList(),
-      );
+    final completions = {...habits[id]!.completions};
+
+    if (habits[id]!.isCompletedForDate(date)) {
+      completions.remove(date.onlydate);
     } else {
-      habits[id] = habits[id]!.copyWith(
-        history: [...habits[id]!.history, date.onlydate],
+      completions[date.onlydate] = CompletionModel(
+        date: date.onlydate,
+        numberOfCompletions: 1,
       );
     }
+    
+    habits[id] = habits[id]!.copyWith(completions: completions);
     AppDatabase.saveHabit(habits[id]!);
     notifyListeners();
   }

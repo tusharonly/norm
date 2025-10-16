@@ -4,7 +4,6 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:norm/src/models/habit_model.dart';
 import 'package:norm/src/providers/habits_provider.dart';
 import 'package:norm/src/theme.dart';
-import 'package:norm/src/utils/extensions.dart';
 import 'package:provider/provider.dart';
 
 class ActivityCalender extends StatefulWidget {
@@ -79,7 +78,7 @@ class _ActivityCalenderState extends State<ActivityCalender> {
   }
 
   bool _isHabitCompleted(DateTime date, HabitModel habit) {
-    return habit.history.contains(date.onlydate);
+    return habit.isCompletedForDate(date);
   }
 
   void _toggleHabitCompletion(DateTime date) {

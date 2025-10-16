@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:norm/src/router.dart';
-import 'package:norm/src/theme.dart'; 
+import 'package:norm/src/theme.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -35,7 +35,7 @@ class _SettingsPageState extends State<SettingsPage> {
         title: Text('Settings'),
         centerTitle: true,
         leading: IconButton(
-          icon: Icon(LucideIcons.x, color: Colors.white),
+          icon: Icon(LucideIcons.arrowLeft, color: Colors.white),
           onPressed: () {
             AppRouter.pop();
           },
