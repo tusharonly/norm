@@ -132,7 +132,9 @@ class _CreateOrEditHabitPageState extends State<CreateOrEditHabitPage> {
               LucideIcons.check,
               color: habitName.isNotEmpty ? Colors.white : Colors.grey,
             ),
-            onPressed: habitName.isNotEmpty ? createHabit : null,
+            onPressed: habitName.isNotEmpty
+                ? (widget.habit != null ? editHabit : createHabit)
+                : null,
           ),
           SizedBox(width: 8),
         ],
