@@ -56,25 +56,32 @@ class _HabitDetailsPageState extends State<HabitDetailsPage> {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               spacing: 16,
               children: [
-                Column(
-                  spacing: 8,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 16.0),
-                      child: Text(
-                        "Activity",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
+                // Description section (only show if description exists)
+                if (widget.habit.description.isNotEmpty)
+                  SizedBox(
+                    width: double.infinity,
+                    child: Card(
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Text(
+                          widget.habit.description,
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: AppColors.secondaryTextColor,
+                          ),
+                          textAlign: TextAlign.center,
                         ),
                       ),
                     ),
-                    ActivityCalender(habit: widget.habit),
-                  ],
-                ),
+                  ),
+                ActivityCalender(habit: widget.habit),
               ],
             ),
           ),
