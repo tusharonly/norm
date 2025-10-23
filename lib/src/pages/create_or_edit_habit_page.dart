@@ -24,6 +24,9 @@ class _CreateOrEditHabitPageState extends State<CreateOrEditHabitPage> {
   String habitName = '';
   String habitDescription = '';
 
+  late TextEditingController nameController;
+  late TextEditingController descriptionController;
+
   void createHabit() {
     context.read<HabitsProvider>().createHabit(
       name: habitName,
@@ -37,6 +40,7 @@ class _CreateOrEditHabitPageState extends State<CreateOrEditHabitPage> {
     context.read<HabitsProvider>().editHabit(
       widget.habit!.copyWith(
         name: habitName,
+        description: habitDescription,
         color: selectedColor,
       ),
     );
@@ -101,7 +105,18 @@ class _CreateOrEditHabitPageState extends State<CreateOrEditHabitPage> {
       habitDescription = widget.habit!.description;
       selectedColor = widget.habit!.color;
     }
+
+    nameController = TextEditingController(text: habitName);
+    descriptionController = TextEditingController(text: habitDescription);
+
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    descriptionController.dispose();
+    super.dispose();
   }
 
   @override
@@ -132,7 +147,9 @@ class _CreateOrEditHabitPageState extends State<CreateOrEditHabitPage> {
               LucideIcons.check,
               color: habitName.isNotEmpty ? Colors.white : Colors.grey,
             ),
-            onPressed: habitName.isNotEmpty ? createHabit : null,
+            onPressed: habitName.isNotEmpty
+                ? (widget.habit != null ? editHabit : createHabit)
+                : null,
           ),
           SizedBox(width: 8),
         ],
@@ -147,6 +164,7 @@ class _CreateOrEditHabitPageState extends State<CreateOrEditHabitPage> {
                 title: "Name",
                 child: AppTextField(
                   hint: 'eg. Running',
+                  controller: nameController,
                   onChanged: (name) => setState(() => habitName = name),
                 ),
               ),
@@ -154,6 +172,7 @@ class _CreateOrEditHabitPageState extends State<CreateOrEditHabitPage> {
                 title: "Description",
                 child: AppTextField(
                   hint: 'eg. Run 5km daily',
+                  controller: descriptionController,
                   onChanged: (description) =>
                       setState(() => habitDescription = description),
                 ),
