@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:norm/src/models/reminder_model.dart';
 import 'package:norm/src/utils/extensions.dart';
 
 enum HabitInterval { daily, weekly, monthly }
@@ -16,6 +17,7 @@ class HabitModel {
   final Map<String, CompletionModel> completions;
   final HabitInterval interval;
   final int targetFrequency;
+  final List<ReminderModel> reminders;
 
   HabitModel({
     required this.id,
@@ -27,6 +29,7 @@ class HabitModel {
     this.completions = const {},
     this.interval = HabitInterval.daily,
     this.targetFrequency = 1,
+    this.reminders = const [],
   });
 
   bool isCompletedForDate(DateTime date) {
@@ -259,6 +262,7 @@ class HabitModel {
       ),
       'interval': interval.index,
       'targetFrequency': targetFrequency,
+      'reminders': reminders.map((r) => r.toMap()).toList(),
     };
   }
 
@@ -277,6 +281,13 @@ class HabitModel {
       ),
       interval: HabitInterval.values[map['interval'] ?? 0],
       targetFrequency: map['targetFrequency'] ?? 1,
+      reminders: map['reminders'] != null
+          ? List<ReminderModel>.from(
+              (map['reminders'] as List).map(
+                (r) => ReminderModel.fromMap(r as Map<String, dynamic>),
+              ),
+            )
+          : [],
     );
   }
 
@@ -295,6 +306,7 @@ class HabitModel {
     Map<String, CompletionModel>? completions,
     HabitInterval? interval,
     int? targetFrequency,
+    List<ReminderModel>? reminders,
   }) {
     return HabitModel(
       id: id,
@@ -307,6 +319,7 @@ class HabitModel {
       completions: completions ?? this.completions,
       interval: interval ?? this.interval,
       targetFrequency: targetFrequency ?? this.targetFrequency,
+      reminders: reminders ?? this.reminders,
     );
   }
 }

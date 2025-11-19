@@ -11,11 +11,15 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_local_notifications: ^18.0.1
+  flutter_timezone: ^3.0.1
   hive_ce_flutter: ^2.3.2
   intl: ^0.20.2
   lucide_icons_flutter: ^3.1.1
   package_info_plus: ^8.0.2
+  permission_handler: ^11.3.1
   provider: ^6.1.5+1
+  timezone: ^0.9.4
   url_launcher: ^6.3.1
   uuid: ^4.5.1
 

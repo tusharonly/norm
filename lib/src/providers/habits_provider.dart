@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:norm/src/core/database.dart';
 import 'package:norm/src/models/habit_model.dart';
+import 'package:norm/src/models/reminder_model.dart';
+import 'package:norm/src/services/notification_service.dart';
 import 'package:norm/src/utils/extensions.dart';
 import 'package:uuid/uuid.dart';
 
 class HabitsProvider extends ChangeNotifier {
   final habits = AppDatabase.getHabits();
+  final _notificationService = NotificationService();
 
   Future<void> createHabit({
     required String name,
@@ -13,6 +16,7 @@ class HabitsProvider extends ChangeNotifier {
     required Color color,
     HabitInterval interval = HabitInterval.daily,
     int targetFrequency = 1,
+    List<ReminderModel> reminders = const [],
   }) async {
     final id = Uuid().v4();
     habits[id] = HabitModel(
@@ -23,14 +27,25 @@ class HabitsProvider extends ChangeNotifier {
       order: habits.length,
       interval: interval,
       targetFrequency: targetFrequency,
+      reminders: reminders,
     );
     AppDatabase.saveHabit(habits[id]!);
+
+    // Schedule notifications for reminders
+    if (reminders.isNotEmpty) {
+      await _notificationService.scheduleHabitReminders(habits[id]!);
+    }
+
     notifyListeners();
   }
 
   Future<void> editHabit(HabitModel habit) async {
     habits[habit.id] = habit;
     AppDatabase.saveHabit(habits[habit.id]!);
+
+    // Reschedule notifications
+    await _notificationService.scheduleHabitReminders(habit);
+
     notifyListeners();
   }
 
@@ -55,6 +70,9 @@ class HabitsProvider extends ChangeNotifier {
   }
 
   Future<void> deleteHabit(String id) async {
+    // Cancel all notifications for this habit
+    await _notificationService.cancelHabitReminders(id);
+
     habits.remove(id);
     AppDatabase.deleteHabit(id);
     notifyListeners();
