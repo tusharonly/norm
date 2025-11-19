@@ -27,10 +27,29 @@ class NormApp extends StatelessWidget {
           color: AppColors.primaryTextColor,
         ),
       ),
+      timePickerTheme: TimePickerThemeData(
+        backgroundColor: AppColors.cardBackgroundColor,
+        hourMinuteTextColor: AppColors.primaryTextColor,
+        dayPeriodTextColor: AppColors.primaryTextColor,
+        dialHandColor: AppColors.primaryColor,
+        dayPeriodColor: AppColors.primaryColor,
+        dialBackgroundColor: AppColors.cardBackgroundColor,
+        hourMinuteColor: WidgetStateColor.resolveWith(
+          (states) => states.contains(WidgetState.selected)
+              ? AppColors.primaryColor
+              : AppColors.cardBackgroundColor,
+        ),
+      ),
       cardTheme: CardThemeData(
         color: AppColors.cardBackgroundColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
+        ),
+      ),
+      bottomSheetTheme: BottomSheetThemeData(
+        backgroundColor: AppColors.cardBackgroundColor,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
         ),
       ),
     );

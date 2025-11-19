@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:norm/src/models/habit_model.dart';
+import 'package:norm/src/models/reminder_model.dart';
 import 'package:norm/src/providers/habits_provider.dart';
 import 'package:norm/src/router.dart';
 import 'package:norm/src/theme.dart';
+import 'package:norm/src/widgets/add_reminder_sheet.dart';
 import 'package:norm/src/widgets/color_picker_row.dart';
 import 'package:norm/src/widgets/input_section.dart';
+import 'package:norm/src/widgets/reminder_card.dart';
 import 'package:norm/src/widgets/text_field.dart';
 import 'package:provider/provider.dart';
 
@@ -25,6 +28,7 @@ class _CreateOrEditHabitPageState extends State<CreateOrEditHabitPage> {
   String habitDescription = '';
   HabitInterval selectedInterval = HabitInterval.daily;
   int targetFrequency = 1;
+  List<ReminderModel> reminders = [];
 
   late TextEditingController nameController;
   late TextEditingController descriptionController;
@@ -36,6 +40,7 @@ class _CreateOrEditHabitPageState extends State<CreateOrEditHabitPage> {
       description: habitDescription,
       interval: selectedInterval,
       targetFrequency: targetFrequency,
+      reminders: reminders,
     );
     AppRouter.pop();
   }
@@ -48,6 +53,7 @@ class _CreateOrEditHabitPageState extends State<CreateOrEditHabitPage> {
         color: selectedColor,
         interval: selectedInterval,
         targetFrequency: targetFrequency,
+        reminders: reminders,
       ),
     );
     AppRouter.pop();
@@ -112,6 +118,7 @@ class _CreateOrEditHabitPageState extends State<CreateOrEditHabitPage> {
       selectedColor = widget.habit!.color;
       selectedInterval = widget.habit!.interval;
       targetFrequency = widget.habit!.targetFrequency;
+      reminders = List.from(widget.habit!.reminders);
     }
 
     nameController = TextEditingController(text: habitName);
@@ -183,6 +190,24 @@ class _CreateOrEditHabitPageState extends State<CreateOrEditHabitPage> {
                   controller: descriptionController,
                   onChanged: (description) =>
                       setState(() => habitDescription = description),
+                ),
+              ),
+              InputSection(
+                title: "Color",
+                child: Card(
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: ColorPickerRow(
+                      onColorSelected: (color) {
+                        setState(() => selectedColor = color);
+                      },
+                      selectedColor: selectedColor,
+                    ),
+                  ),
                 ),
               ),
               InputSection(
@@ -285,21 +310,65 @@ class _CreateOrEditHabitPageState extends State<CreateOrEditHabitPage> {
                 ),
               ),
               InputSection(
-                title: "Color",
-                child: Card(
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: ColorPickerRow(
-                      onColorSelected: (color) {
-                        setState(() => selectedColor = color);
+                title: "Reminders",
+                child: Column(
+                  spacing: 8,
+                  children: [
+                    if (reminders.isNotEmpty)
+                      ...reminders.map(
+                        (reminder) => ReminderCard(
+                          reminder: reminder,
+                          onDelete: () {
+                            setState(() {
+                              reminders.remove(reminder);
+                            });
+                          },
+                        ),
+                      ),
+                    GestureDetector(
+                      onTap: () async {
+                        final reminder =
+                            await showModalBottomSheet<ReminderModel>(
+                              context: context,
+                              isScrollControlled: true,
+                              showDragHandle: true,
+                              builder: (context) => const AddReminderSheet(),
+                            );
+                        if (reminder != null) {
+                          setState(() {
+                            reminders.add(reminder);
+                          });
+                        }
                       },
-                      selectedColor: selectedColor,
+                      child: Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        decoration: BoxDecoration(
+                          color: AppColors.cardBackgroundColor,
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              LucideIcons.plus,
+                              size: 18,
+                              color: AppColors.primaryColor,
+                            ),
+                            const SizedBox(width: 8),
+                            Text(
+                              'Add Reminder',
+                              style: TextStyle(
+                                color: AppColors.primaryColor,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
               ),
             ],
