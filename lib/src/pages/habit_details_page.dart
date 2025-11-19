@@ -5,6 +5,7 @@ import 'package:norm/src/pages/create_or_edit_habit_page.dart';
 import 'package:norm/src/router.dart';
 import 'package:norm/src/theme.dart';
 import 'package:norm/src/widgets/activity_calender.dart';
+import 'package:norm/src/widgets/streaks_card.dart';
 
 class HabitDetailsPage extends StatefulWidget {
   const HabitDetailsPage({super.key, required this.habit});
@@ -87,6 +88,18 @@ class _HabitDetailsPageState extends State<HabitDetailsPage> {
                       ),
                     ),
                     ActivityCalender(habit: widget.habit),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 16.0),
+                      child: Text(
+                        "Streaks",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.primaryTextColor,
+                        ),
+                      ),
+                    ),
+                    StreaksCard(habit: widget.habit),
                   ],
                 ),
               ],

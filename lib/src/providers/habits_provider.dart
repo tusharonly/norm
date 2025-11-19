@@ -11,6 +11,8 @@ class HabitsProvider extends ChangeNotifier {
     required String name,
     required String description,
     required Color color,
+    HabitInterval interval = HabitInterval.daily,
+    int targetFrequency = 1,
   }) async {
     final id = Uuid().v4();
     habits[id] = HabitModel(
@@ -19,6 +21,8 @@ class HabitsProvider extends ChangeNotifier {
       description: description,
       color: color,
       order: habits.length,
+      interval: interval,
+      targetFrequency: targetFrequency,
     );
     AppDatabase.saveHabit(habits[id]!);
     notifyListeners();
@@ -44,7 +48,7 @@ class HabitsProvider extends ChangeNotifier {
         numberOfCompletions: 1,
       );
     }
-    
+
     habits[id] = habits[id]!.copyWith(completions: completions);
     AppDatabase.saveHabit(habits[id]!);
     notifyListeners();
