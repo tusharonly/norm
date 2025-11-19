@@ -23,6 +23,8 @@ class _CreateOrEditHabitPageState extends State<CreateOrEditHabitPage> {
 
   String habitName = '';
   String habitDescription = '';
+  HabitInterval selectedInterval = HabitInterval.daily;
+  int targetFrequency = 1;
 
   late TextEditingController nameController;
   late TextEditingController descriptionController;
@@ -32,6 +34,8 @@ class _CreateOrEditHabitPageState extends State<CreateOrEditHabitPage> {
       name: habitName,
       color: selectedColor,
       description: habitDescription,
+      interval: selectedInterval,
+      targetFrequency: targetFrequency,
     );
     AppRouter.pop();
   }
@@ -42,6 +46,8 @@ class _CreateOrEditHabitPageState extends State<CreateOrEditHabitPage> {
         name: habitName,
         description: habitDescription,
         color: selectedColor,
+        interval: selectedInterval,
+        targetFrequency: targetFrequency,
       ),
     );
     AppRouter.pop();
@@ -104,6 +110,8 @@ class _CreateOrEditHabitPageState extends State<CreateOrEditHabitPage> {
       habitName = widget.habit!.name;
       habitDescription = widget.habit!.description;
       selectedColor = widget.habit!.color;
+      selectedInterval = widget.habit!.interval;
+      targetFrequency = widget.habit!.targetFrequency;
     }
 
     nameController = TextEditingController(text: habitName);
@@ -178,6 +186,105 @@ class _CreateOrEditHabitPageState extends State<CreateOrEditHabitPage> {
                 ),
               ),
               InputSection(
+                title: "Interval",
+                child: Column(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        color: AppColors.cardBackgroundColor,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      padding: const EdgeInsets.all(4),
+                      child: Row(
+                        children: [
+                          _buildIntervalOption(HabitInterval.daily, 'Daily'),
+                          _buildIntervalOption(HabitInterval.weekly, 'Weekly'),
+                          _buildIntervalOption(
+                            HabitInterval.monthly,
+                            'Monthly',
+                          ),
+                        ],
+                      ),
+                    ),
+                    if (selectedInterval != HabitInterval.daily)
+                      Container(
+                        margin: const EdgeInsets.only(top: 4),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 8,
+                        ),
+                        decoration: BoxDecoration(
+                          color: AppColors.cardBackgroundColor,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: Text(
+                                '$targetFrequency times per ${selectedInterval == HabitInterval.weekly ? 'week' : 'month'}',
+                                style: TextStyle(
+                                  color: AppColors.primaryTextColor,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Colors.black.withAlpha(50),
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: Row(
+                                children: [
+                                  _buildFrequencyButton(
+                                    icon: LucideIcons.minus,
+                                    onTap: targetFrequency > 1
+                                        ? () => setState(
+                                            () => targetFrequency--,
+                                          )
+                                        : null,
+                                  ),
+                                  Container(
+                                    constraints: BoxConstraints(
+                                      minWidth: 40,
+                                    ),
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      '$targetFrequency',
+                                      style: TextStyle(
+                                        color: AppColors.primaryTextColor,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  _buildFrequencyButton(
+                                    icon: LucideIcons.plus,
+                                    onTap: () {
+                                      if (selectedInterval ==
+                                              HabitInterval.weekly &&
+                                          targetFrequency >= 6) {
+                                        return;
+                                      }
+                                      if (selectedInterval ==
+                                              HabitInterval.monthly &&
+                                          targetFrequency >= 25) {
+                                        return;
+                                      }
+                                      setState(() => targetFrequency++);
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+              InputSection(
                 title: "Color",
                 child: Card(
                   elevation: 0,
@@ -196,6 +303,69 @@ class _CreateOrEditHabitPageState extends State<CreateOrEditHabitPage> {
                 ),
               ),
             ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildIntervalOption(HabitInterval interval, String label) {
+    final isSelected = selectedInterval == interval;
+    return Expanded(
+      child: GestureDetector(
+        onTap: () {
+          setState(() {
+            selectedInterval = interval;
+            if (selectedInterval == HabitInterval.daily) {
+              targetFrequency = 1;
+            } else if (selectedInterval == HabitInterval.weekly) {
+              targetFrequency = 3;
+            } else {
+              targetFrequency = 10;
+            }
+          });
+        },
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          curve: Curves.easeInOut,
+          padding: const EdgeInsets.symmetric(vertical: 12),
+          decoration: BoxDecoration(
+            color: isSelected ? AppColors.primaryColor : Colors.transparent,
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child: Text(
+            label,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: isSelected ? Colors.black : AppColors.secondaryTextColor,
+              fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
+              fontSize: 14,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFrequencyButton({
+    required IconData icon,
+    required VoidCallback? onTap,
+  }) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(12),
+        child: Container(
+          width: 40,
+          height: 40,
+          alignment: Alignment.center,
+          child: Icon(
+            icon,
+            size: 20,
+            color: onTap != null
+                ? AppColors.primaryTextColor
+                : AppColors.secondaryTextColor.withAlpha(100),
           ),
         ),
       ),
