@@ -371,6 +371,7 @@ class _CreateOrEditHabitPageState extends State<CreateOrEditHabitPage> {
                   ],
                 ),
               ),
+              SizedBox(height: 20),
             ],
           ),
         ),

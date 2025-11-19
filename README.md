@@ -40,7 +40,7 @@ Norm is a minimal habit tracker that focuses on quick daily logging. The home sc
 
 <div align="center">
   <kbd><img src="screenshots/settings_page.png" width="200"></kbd>
-  <kbd><img src="screenshots/delete_habit.png" width="200"></kbd>
+  <kbd><img src="screenshots/habit_reminder.png" width="200"></kbd>
 </div>
 
 </details>
