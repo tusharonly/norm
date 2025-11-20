@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:norm/src/providers/habits_provider.dart';
 import 'package:norm/src/router.dart';
 import 'package:norm/src/theme.dart';
+import 'package:norm/src/utils/toast.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -46,6 +49,27 @@ class _SettingsPageState extends State<SettingsPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // Data Management Group
+            _buildSettingsGroup(
+              title: 'Data Management',
+              children: [
+                _buildSettingsTile(
+                  icon: LucideIcons.download,
+                  title: 'Export Habits',
+                  subtitle: 'Save all habits to a file',
+                  onTap: () => _exportHabits(context),
+                ),
+                _buildSettingsTile(
+                  icon: LucideIcons.upload,
+                  title: 'Import Habits',
+                  subtitle: 'Restore habits from a file',
+                  onTap: () => _importHabits(context),
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 24),
+
             // GitHub Group
             _buildSettingsGroup(
               title: 'Links',
@@ -216,6 +240,44 @@ class _SettingsPageState extends State<SettingsPage> {
         ),
       ),
     );
+  }
+
+  Future<void> _exportHabits(BuildContext context) async {
+    final provider = context.read<HabitsProvider>();
+
+    // Show loading indicator
+    if (!mounted) return;
+    Toast.loading(context, 'Exporting habits...');
+
+    final filePath = await provider.exportHabits();
+
+    if (!mounted) return;
+
+    if (filePath != null) {
+      Toast.success(context, 'Habits exported successfully!');
+    } else {
+      Toast.warning(context, 'Export cancelled or failed');
+    }
+  }
+
+  Future<void> _importHabits(BuildContext context) async {
+    final provider = context.read<HabitsProvider>();
+
+    // Show loading indicator
+    if (!mounted) return;
+    Toast.loading(context, 'Importing habits...');
+
+    final error = await provider.importHabits();
+
+    if (!mounted) return;
+
+    if (error == null) {
+      // Success
+      Toast.success(context, 'Habits imported successfully!');
+    } else {
+      // Failed
+      Toast.error(context, 'Import failed: $error');
+    }
   }
 
   Future<void> _launchUrl(String url) async {

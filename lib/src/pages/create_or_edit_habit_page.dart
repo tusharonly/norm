@@ -136,243 +136,249 @@ class _CreateOrEditHabitPageState extends State<CreateOrEditHabitPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.habit != null ? 'Edit Habit' : 'New Habit'),
-        titleSpacing: 0,
-        leading: IconButton(
-          icon: Icon(LucideIcons.x, color: Colors.white),
-          onPressed: AppRouter.pop,
-        ),
-        actions: [
-          if (widget.habit != null)
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(widget.habit != null ? 'Edit Habit' : 'New Habit'),
+          titleSpacing: 0,
+          leading: IconButton(
+            icon: Icon(LucideIcons.x, color: Colors.white),
+            onPressed: AppRouter.pop,
+          ),
+          actions: [
+            if (widget.habit != null)
+              IconButton.filledTonal(
+                style: IconButton.styleFrom(
+                  backgroundColor: AppColors.dangerColor,
+                ),
+                icon: Icon(LucideIcons.trash, color: Colors.white, size: 20),
+                onPressed: showDeleteConfirmationDialog,
+              ),
+            SizedBox(width: 8),
             IconButton.filledTonal(
               style: IconButton.styleFrom(
-                backgroundColor: AppColors.dangerColor,
+                backgroundColor: AppColors.successColor,
               ),
-              icon: Icon(LucideIcons.trash, color: Colors.white, size: 20),
-              onPressed: showDeleteConfirmationDialog,
-            ),
-          SizedBox(width: 8),
-          IconButton.filledTonal(
-            style: IconButton.styleFrom(
-              backgroundColor: AppColors.successColor,
-            ),
-            icon: Icon(
-              LucideIcons.check,
-              color: habitName.isNotEmpty ? Colors.white : Colors.grey,
-            ),
-            onPressed: habitName.isNotEmpty
-                ? (widget.habit != null ? editHabit : createHabit)
-                : null,
-          ),
-          SizedBox(width: 8),
-        ],
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            spacing: 16,
-            children: [
-              InputSection(
-                title: "Name",
-                child: AppTextField(
-                  hint: 'eg. Running',
-                  controller: nameController,
-                  onChanged: (name) => setState(() => habitName = name),
-                ),
+              icon: Icon(
+                LucideIcons.check,
+                color: habitName.isNotEmpty ? Colors.white : Colors.grey,
               ),
-              InputSection(
-                title: "Description",
-                child: AppTextField(
-                  hint: 'eg. Run 5km daily',
-                  controller: descriptionController,
-                  onChanged: (description) =>
-                      setState(() => habitDescription = description),
-                ),
-              ),
-              InputSection(
-                title: "Color",
-                child: Card(
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0),
+              onPressed: habitName.isNotEmpty
+                  ? (widget.habit != null ? editHabit : createHabit)
+                  : null,
+            ),
+            SizedBox(width: 8),
+          ],
+        ),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              spacing: 16,
+              children: [
+                InputSection(
+                  title: "Name",
+                  child: AppTextField(
+                    hint: 'eg. Running',
+                    controller: nameController,
+                    onChanged: (name) => setState(() => habitName = name),
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: ColorPickerRow(
-                      onColorSelected: (color) {
-                        setState(() => selectedColor = color);
-                      },
-                      selectedColor: selectedColor,
+                ),
+                InputSection(
+                  title: "Description",
+                  child: AppTextField(
+                    hint: 'eg. Run 5km daily',
+                    controller: descriptionController,
+                    onChanged: (description) =>
+                        setState(() => habitDescription = description),
+                  ),
+                ),
+                InputSection(
+                  title: "Color",
+                  child: Card(
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: ColorPickerRow(
+                        onColorSelected: (color) {
+                          setState(() => selectedColor = color);
+                        },
+                        selectedColor: selectedColor,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              InputSection(
-                title: "Interval",
-                child: Column(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        color: AppColors.cardBackgroundColor,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      padding: const EdgeInsets.all(4),
-                      child: Row(
-                        children: [
-                          _buildIntervalOption(HabitInterval.daily, 'Daily'),
-                          _buildIntervalOption(HabitInterval.weekly, 'Weekly'),
-                          _buildIntervalOption(
-                            HabitInterval.monthly,
-                            'Monthly',
-                          ),
-                        ],
-                      ),
-                    ),
-                    if (selectedInterval != HabitInterval.daily)
+                InputSection(
+                  title: "Interval",
+                  child: Column(
+                    children: [
                       Container(
-                        margin: const EdgeInsets.only(top: 4),
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 8,
-                        ),
                         decoration: BoxDecoration(
                           color: AppColors.cardBackgroundColor,
                           borderRadius: BorderRadius.circular(20),
                         ),
+                        padding: const EdgeInsets.all(4),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Expanded(
-                              child: Text(
-                                '$targetFrequency times per ${selectedInterval == HabitInterval.weekly ? 'week' : 'month'}',
-                                style: TextStyle(
-                                  color: AppColors.primaryTextColor,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
+                            _buildIntervalOption(HabitInterval.daily, 'Daily'),
+                            _buildIntervalOption(
+                              HabitInterval.weekly,
+                              'Weekly',
+                            ),
+                            _buildIntervalOption(
+                              HabitInterval.monthly,
+                              'Monthly',
+                            ),
+                          ],
+                        ),
+                      ),
+                      if (selectedInterval != HabitInterval.daily)
+                        Container(
+                          margin: const EdgeInsets.only(top: 4),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 8,
+                          ),
+                          decoration: BoxDecoration(
+                            color: AppColors.cardBackgroundColor,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  '$targetFrequency times per ${selectedInterval == HabitInterval.weekly ? 'week' : 'month'}',
+                                  style: TextStyle(
+                                    color: AppColors.primaryTextColor,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
                               ),
-                            ),
-                            Container(
-                              decoration: BoxDecoration(
-                                color: Colors.black.withAlpha(50),
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              child: Row(
-                                children: [
-                                  _buildFrequencyButton(
-                                    icon: LucideIcons.minus,
-                                    onTap: targetFrequency > 1
-                                        ? () => setState(
-                                            () => targetFrequency--,
-                                          )
-                                        : null,
-                                  ),
-                                  Container(
-                                    constraints: BoxConstraints(
-                                      minWidth: 40,
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.black.withAlpha(50),
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Row(
+                                  children: [
+                                    _buildFrequencyButton(
+                                      icon: LucideIcons.minus,
+                                      onTap: targetFrequency > 1
+                                          ? () => setState(
+                                              () => targetFrequency--,
+                                            )
+                                          : null,
                                     ),
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      '$targetFrequency',
-                                      style: TextStyle(
-                                        color: AppColors.primaryTextColor,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
+                                    Container(
+                                      constraints: BoxConstraints(
+                                        minWidth: 40,
+                                      ),
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        '$targetFrequency',
+                                        style: TextStyle(
+                                          color: AppColors.primaryTextColor,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  _buildFrequencyButton(
-                                    icon: LucideIcons.plus,
-                                    onTap: () {
-                                      if (selectedInterval ==
-                                              HabitInterval.weekly &&
-                                          targetFrequency >= 6) {
-                                        return;
-                                      }
-                                      if (selectedInterval ==
-                                              HabitInterval.monthly &&
-                                          targetFrequency >= 25) {
-                                        return;
-                                      }
-                                      setState(() => targetFrequency++);
-                                    },
-                                  ),
-                                ],
+                                    _buildFrequencyButton(
+                                      icon: LucideIcons.plus,
+                                      onTap: () {
+                                        if (selectedInterval ==
+                                                HabitInterval.weekly &&
+                                            targetFrequency >= 6) {
+                                          return;
+                                        }
+                                        if (selectedInterval ==
+                                                HabitInterval.monthly &&
+                                            targetFrequency >= 25) {
+                                          return;
+                                        }
+                                        setState(() => targetFrequency++);
+                                      },
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              InputSection(
-                title: "Reminders",
-                child: Column(
-                  spacing: 8,
-                  children: [
-                    if (reminders.isNotEmpty)
-                      ...reminders.map(
-                        (reminder) => ReminderCard(
-                          reminder: reminder,
-                          onDelete: () {
+                InputSection(
+                  title: "Reminders",
+                  child: Column(
+                    spacing: 8,
+                    children: [
+                      if (reminders.isNotEmpty)
+                        ...reminders.map(
+                          (reminder) => ReminderCard(
+                            reminder: reminder,
+                            onDelete: () {
+                              setState(() {
+                                reminders.remove(reminder);
+                              });
+                            },
+                          ),
+                        ),
+                      GestureDetector(
+                        onTap: () async {
+                          final reminder =
+                              await showModalBottomSheet<ReminderModel>(
+                                context: context,
+                                isScrollControlled: true,
+                                showDragHandle: true,
+                                builder: (context) => const AddReminderSheet(),
+                              );
+                          if (reminder != null) {
                             setState(() {
-                              reminders.remove(reminder);
+                              reminders.add(reminder);
                             });
-                          },
-                        ),
-                      ),
-                    GestureDetector(
-                      onTap: () async {
-                        final reminder =
-                            await showModalBottomSheet<ReminderModel>(
-                              context: context,
-                              isScrollControlled: true,
-                              showDragHandle: true,
-                              builder: (context) => const AddReminderSheet(),
-                            );
-                        if (reminder != null) {
-                          setState(() {
-                            reminders.add(reminder);
-                          });
-                        }
-                      },
-                      child: Container(
-                        width: double.infinity,
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        decoration: BoxDecoration(
-                          color: AppColors.cardBackgroundColor,
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              LucideIcons.plus,
-                              size: 18,
-                              color: AppColors.primaryColor,
-                            ),
-                            const SizedBox(width: 8),
-                            Text(
-                              'Add Reminder',
-                              style: TextStyle(
+                          }
+                        },
+                        child: Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          decoration: BoxDecoration(
+                            color: AppColors.cardBackgroundColor,
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                LucideIcons.plus,
+                                size: 18,
                                 color: AppColors.primaryColor,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 16,
                               ),
-                            ),
-                          ],
+                              const SizedBox(width: 8),
+                              Text(
+                                'Add Reminder',
+                                style: TextStyle(
+                                  color: AppColors.primaryColor,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              SizedBox(height: 20),
-            ],
+                SizedBox(height: 20),
+              ],
+            ),
           ),
         ),
       ),

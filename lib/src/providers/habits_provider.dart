@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:norm/src/core/database.dart';
 import 'package:norm/src/models/habit_model.dart';
 import 'package:norm/src/models/reminder_model.dart';
+import 'package:norm/src/services/import_export_service.dart';
 import 'package:norm/src/services/notification_service.dart';
 import 'package:norm/src/utils/extensions.dart';
 import 'package:uuid/uuid.dart';
@@ -9,6 +10,7 @@ import 'package:uuid/uuid.dart';
 class HabitsProvider extends ChangeNotifier {
   final habits = AppDatabase.getHabits();
   final _notificationService = NotificationService();
+  final _importExportService = ImportExportService();
 
   Future<void> createHabit({
     required String name,
@@ -78,5 +80,47 @@ class HabitsProvider extends ChangeNotifier {
     habits.remove(id);
     AppDatabase.deleteHabit(id);
     notifyListeners();
+  }
+
+  /// Exports all habits to a JSON file
+  ///
+  /// Returns the file path if successful, null otherwise
+  Future<String?> exportHabits() async {
+    try {
+      final habitsList = habits.values.toList();
+      final filePath = await _importExportService.exportHabits(habitsList);
+      return filePath;
+    } catch (e) {
+      debugPrint('Error in exportHabits: $e');
+      return null;
+    }
+  }
+
+  /// Imports habits from a JSON file
+  ///
+  /// Returns null if successful, error message otherwise
+  Future<String?> importHabits() async {
+    try {
+      final importedHabits = await _importExportService.importHabits();
+
+      // Save all imported habits to database
+      for (final habit in importedHabits) {
+        habits[habit.id] = habit;
+        await AppDatabase.saveHabit(habit);
+
+        // Schedule reminders for habits that have them
+        if (habit.reminders.isNotEmpty) {
+          await _notificationService.scheduleHabitReminders(habit);
+        }
+      }
+
+      // Update UI
+      notifyListeners();
+
+      return null; // Success
+    } catch (e) {
+      debugPrint('Error in importHabits: $e');
+      return e.toString().replaceFirst('Exception: ', '');
+    }
   }
 }

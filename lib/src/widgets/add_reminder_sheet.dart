@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:norm/src/models/reminder_model.dart';
 import 'package:norm/src/theme.dart';
+import 'package:norm/src/utils/toast.dart';
 import 'package:uuid/uuid.dart';
 
 class AddReminderSheet extends StatefulWidget {
@@ -48,15 +49,7 @@ class _AddReminderSheetState extends State<AddReminderSheet> {
 
   void _saveReminder() {
     if (selectedDays.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            'Please select at least one day',
-            style: TextStyle(color: AppColors.primaryTextColor),
-          ),
-          backgroundColor: AppColors.dangerColor,
-        ),
-      );
+      Toast.error(context, 'Please select at least one day');
       return;
     }
 
