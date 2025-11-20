@@ -15,6 +15,7 @@ dependencies:
   flutter_local_notifications: ^18.0.1
   flutter_timezone: ^3.0.1
   hive_ce_flutter: ^2.3.2
+  home_widget: ^0.8.1
   intl: ^0.20.2
   lucide_icons_flutter: ^3.1.1
   package_info_plus: ^8.0.2
