@@ -13,8 +13,10 @@ class AddReminderSheet extends StatefulWidget {
 }
 
 class _AddReminderSheetState extends State<AddReminderSheet> {
-  TimeOfDay selectedTime = TimeOfDay.now();
-  Set<int> selectedDays = {};
+  TimeOfDay selectedTime = TimeOfDay.fromDateTime(
+    DateTime.now().add(Duration(minutes: 1)),
+  );
+  Set<int> selectedDays = {1, 2, 3, 4, 5, 6, 7};
 
   final List<String> dayNames = [
     'Mon',

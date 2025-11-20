@@ -242,7 +242,7 @@ class _CreateOrEditHabitPageState extends State<CreateOrEditHabitPage> {
                           padding: const EdgeInsets.symmetric(
                             horizontal: 12,
                             vertical: 8,
-                          ),
+                          ).copyWith(left: 16),
                           decoration: BoxDecoration(
                             color: AppColors.cardBackgroundColor,
                             borderRadius: BorderRadius.circular(20),

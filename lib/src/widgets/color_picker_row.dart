@@ -30,15 +30,15 @@ class _ColorPickerRowState extends State<ColorPickerRow> {
               children: [
                 for (var color
                     in index == 0
-                        ? AppColors.habitColors.sublist(0, 4)
-                        : AppColors.habitColors.sublist(4))
+                        ? AppColors.habitColors.sublist(0, 6)
+                        : AppColors.habitColors.sublist(6))
                   GestureDetector(
                     onTap: () {
                       widget.onColorSelected(color);
                     },
                     child: Container(
-                      width: 50,
-                      height: 50,
+                      width: 35,
+                      height: 35,
                       decoration: BoxDecoration(
                         color: color,
                         shape: BoxShape.circle,
@@ -46,8 +46,8 @@ class _ColorPickerRowState extends State<ColorPickerRow> {
                       child: widget.selectedColor == color
                           ? Center(
                               child: Container(
-                                width: 20,
-                                height: 20,
+                                width: 15,
+                                height: 15,
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                   shape: BoxShape.circle,
