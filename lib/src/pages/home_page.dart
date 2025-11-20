@@ -9,8 +9,42 @@ import 'package:norm/src/router.dart';
 import 'package:norm/src/theme.dart';
 import 'package:provider/provider.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+
+    // When app resumes, reload habits from database to sync widget changes
+    if (state == AppLifecycleState.resumed) {
+      debugPrint('HomePage: App resumed - reloading habits');
+      try {
+        final provider = context.read<HabitsProvider>();
+        provider.reloadHabits();
+        debugPrint('HomePage: Habits reloaded successfully');
+      } catch (e) {
+        debugPrint('HomePage: Error reloading habits: $e');
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

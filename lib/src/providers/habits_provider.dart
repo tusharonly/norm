@@ -4,13 +4,23 @@ import 'package:norm/src/models/habit_model.dart';
 import 'package:norm/src/models/reminder_model.dart';
 import 'package:norm/src/services/import_export_service.dart';
 import 'package:norm/src/services/notification_service.dart';
+import 'package:norm/src/services/widget_service.dart';
 import 'package:norm/src/utils/extensions.dart';
 import 'package:uuid/uuid.dart';
 
 class HabitsProvider extends ChangeNotifier {
-  final habits = AppDatabase.getHabits();
+  Map<String, HabitModel> habits = AppDatabase.getHabits();
   final _notificationService = NotificationService();
   final _importExportService = ImportExportService();
+
+  /// Reloads habits from the database
+  /// Call this when the app resumes from background to sync widget changes
+  void reloadHabits() {
+    debugPrint('Reloading habits from database...');
+    habits = AppDatabase.getHabits();
+    debugPrint('Reloaded ${habits.length} habits');
+    notifyListeners();
+  }
 
   Future<void> createHabit({
     required String name,
@@ -36,6 +46,9 @@ class HabitsProvider extends ChangeNotifier {
     // Update UI immediately
     notifyListeners();
 
+    // Update widget
+    await WidgetService.updateWidget(habits);
+
     // Schedule notifications for reminders in the background
     if (reminders.isNotEmpty) {
       await _notificationService.scheduleHabitReminders(habits[id]!);
@@ -48,6 +61,9 @@ class HabitsProvider extends ChangeNotifier {
 
     // Update UI immediately
     notifyListeners();
+
+    // Update widget
+    await WidgetService.updateWidget(habits);
 
     // Reschedule notifications in the background
     await _notificationService.scheduleHabitReminders(habit);
@@ -71,6 +87,9 @@ class HabitsProvider extends ChangeNotifier {
     habits[id] = habits[id]!.copyWith(completions: completions);
     AppDatabase.saveHabit(habits[id]!);
     notifyListeners();
+
+    // Update widget
+    await WidgetService.updateWidget(habits);
   }
 
   Future<void> deleteHabit(String id) async {
@@ -80,6 +99,9 @@ class HabitsProvider extends ChangeNotifier {
     habits.remove(id);
     AppDatabase.deleteHabit(id);
     notifyListeners();
+
+    // Update widget
+    await WidgetService.updateWidget(habits);
   }
 
   /// Exports all habits to a JSON file
@@ -101,7 +123,9 @@ class HabitsProvider extends ChangeNotifier {
   /// Returns null if successful, error message otherwise
   Future<String?> importHabits() async {
     try {
+      debugPrint('Starting habit import...');
       final importedHabits = await _importExportService.importHabits();
+      debugPrint('Imported ${importedHabits.length} habits');
 
       // Save all imported habits to database
       for (final habit in importedHabits) {
@@ -114,8 +138,19 @@ class HabitsProvider extends ChangeNotifier {
         }
       }
 
+      debugPrint('All habits saved to database');
+
       // Update UI
       notifyListeners();
+
+      // Update widget with imported data
+      debugPrint('Updating widget after import...');
+      await WidgetService.updateWidget(habits);
+
+      // Add a small delay and update again to ensure it takes effect
+      await Future.delayed(const Duration(milliseconds: 200));
+      await WidgetService.updateWidget(habits);
+      debugPrint('Widget updated after import');
 
       return null; // Success
     } catch (e) {
