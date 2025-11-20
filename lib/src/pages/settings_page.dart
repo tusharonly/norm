@@ -51,6 +51,14 @@ class _SettingsPageState extends State<SettingsPage> {
               title: 'Links',
               children: [
                 _buildSettingsTile(
+                  icon: LucideIcons.shield,
+                  title: 'Privacy Policy',
+                  subtitle: 'Norm',
+                  onTap: () => _launchUrl(
+                    'https://github.com/tusharonly/norm/blob/main/PRIVACY_POLICY.md',
+                  ),
+                ),
+                _buildSettingsTile(
                   icon: LucideIcons.bug,
                   title: 'Report an Issue',
                   subtitle: 'Help me improve the app',
@@ -66,8 +74,8 @@ class _SettingsPageState extends State<SettingsPage> {
                 _buildSettingsTile(
                   icon: LucideIcons.twitter,
                   title: 'Follow on X (Twitter)',
-                  subtitle: '@vibetushar',
-                  onTap: () => _launchUrl('https://x.com/vibetushar'),
+                  subtitle: '@tusharghige',
+                  onTap: () => _launchUrl('https://x.com/tusharghige'),
                 ),
                 _buildSettingsTile(
                   icon: LucideIcons.externalLink,
@@ -88,7 +96,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   icon: LucideIcons.smartphone,
                   title: 'App Version',
                   subtitle:
-                      ("${_packageInfo?.packageName} v${_packageInfo?.version}+${_packageInfo?.buildNumber}"),
+                      ("v${_packageInfo?.version}+${_packageInfo?.buildNumber}"),
                 ),
               ],
             ),
