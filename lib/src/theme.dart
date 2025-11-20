@@ -9,7 +9,7 @@ class AppColors {
   static const successColor = Colors.greenAccent;
   static const cardBackgroundColor = Color(0xFF1a1a1a);
 
-  static List<Color> habitColors = [
+  static final List<Color> habitColors = [
     HSLColor.fromAHSL(1.0, 0.0, 0.7, 0.6).toColor(),
     HSLColor.fromAHSL(1.0, 30.0, 0.7, 0.6).toColor(),
     HSLColor.fromAHSL(1.0, 60.0, 0.7, 0.6).toColor(),

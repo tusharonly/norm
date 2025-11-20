@@ -179,7 +179,7 @@ class _AddReminderSheetState extends State<AddReminderSheet> {
                 padding: const EdgeInsets.symmetric(vertical: 14),
                 backgroundColor: AppColors.primaryColor,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(30),
                 ),
                 fixedSize: Size.fromWidth(MediaQuery.of(context).size.width),
               ),

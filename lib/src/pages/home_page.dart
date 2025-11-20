@@ -90,28 +90,18 @@ class HomePage extends StatelessWidget {
                                   Duration(days: index),
                                 );
                                 return Container(
+                                  alignment: Alignment.center,
                                   width: constraints.maxWidth / 7,
                                   color: AppColors.scaffoldBackgroundColor,
-                                  child: Column(
-                                    spacing: 2,
-                                    children: [
-                                      Text(
-                                        DateFormat.d().format(date),
-                                        style: TextStyle(
-                                          color: isToday
-                                              ? AppColors.primaryColor
-                                              : AppColors.secondaryTextColor,
-                                        ),
-                                      ),
-                                      Text(
-                                        DateFormat.E().format(date),
-                                        style: TextStyle(
-                                          color: isToday
-                                              ? AppColors.primaryColor
-                                              : AppColors.secondaryTextColor,
-                                        ),
-                                      ),
-                                    ],
+                                  child: Text(
+                                    DateFormat.E().format(date)[0],
+                                    style: TextStyle(
+                                      color: isToday
+                                          ? AppColors.primaryColor
+                                          : AppColors.secondaryTextColor
+                                                .withValues(alpha: 0.4),
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 );
                               },
@@ -188,14 +178,14 @@ class HomePage extends StatelessWidget {
                                           child: Center(
                                             child: AnimatedContainer(
                                               duration: Duration(
-                                                milliseconds: 300,
+                                                milliseconds: 500,
                                               ),
-                                              curve: Curves.easeOut,
+                                              curve: Curves.elasticOut,
                                               width: isDone ? 18 : 8,
-                                              height: isDone ? 19 : 8,
+                                              height: isDone ? 18 : 8,
                                               decoration: BoxDecoration(
-                                                color: habit.color.withAlpha(
-                                                  isDone ? 255 : 255 ~/ 2,
+                                                color: habit.color.withValues(
+                                                  alpha: isDone ? 1 : 0.4,
                                                 ),
                                                 borderRadius:
                                                     BorderRadius.circular(

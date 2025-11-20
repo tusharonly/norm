@@ -219,7 +219,7 @@ class _CreateOrEditHabitPageState extends State<CreateOrEditHabitPage> {
                       Container(
                         decoration: BoxDecoration(
                           color: AppColors.cardBackgroundColor,
-                          borderRadius: BorderRadius.circular(20),
+                          borderRadius: BorderRadius.circular(30),
                         ),
                         padding: const EdgeInsets.all(4),
                         child: Row(
@@ -245,7 +245,7 @@ class _CreateOrEditHabitPageState extends State<CreateOrEditHabitPage> {
                           ).copyWith(left: 16),
                           decoration: BoxDecoration(
                             color: AppColors.cardBackgroundColor,
-                            borderRadius: BorderRadius.circular(20),
+                            borderRadius: BorderRadius.circular(30),
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -263,7 +263,7 @@ class _CreateOrEditHabitPageState extends State<CreateOrEditHabitPage> {
                               Container(
                                 decoration: BoxDecoration(
                                   color: Colors.black.withAlpha(50),
-                                  borderRadius: BorderRadius.circular(12),
+                                  borderRadius: BorderRadius.circular(30),
                                 ),
                                 child: Row(
                                   children: [
@@ -350,7 +350,7 @@ class _CreateOrEditHabitPageState extends State<CreateOrEditHabitPage> {
                           padding: const EdgeInsets.symmetric(vertical: 16),
                           decoration: BoxDecoration(
                             color: AppColors.cardBackgroundColor,
-                            borderRadius: BorderRadius.circular(16),
+                            borderRadius: BorderRadius.circular(30),
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -407,7 +407,7 @@ class _CreateOrEditHabitPageState extends State<CreateOrEditHabitPage> {
           padding: const EdgeInsets.symmetric(vertical: 12),
           decoration: BoxDecoration(
             color: isSelected ? AppColors.primaryColor : Colors.transparent,
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(30),
           ),
           child: Text(
             label,

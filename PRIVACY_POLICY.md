@@ -1,6 +1,8 @@
 # Privacy Policy
 
+**Author:** Tushar Ghige <br/>
 **Last updated:** November 19, 2025
+
 
 ## Introduction
 
