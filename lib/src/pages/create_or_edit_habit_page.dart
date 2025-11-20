@@ -61,7 +61,7 @@ class _CreateOrEditHabitPageState extends State<CreateOrEditHabitPage> {
 
   void deleteHabit() {
     context.read<HabitsProvider>().deleteHabit(widget.habit!.id);
-    AppRouter.pop();
+    AppRouter.pop(true); // Return true to indicate deletion
   }
 
   void showDeleteConfirmationDialog() => showDialog(

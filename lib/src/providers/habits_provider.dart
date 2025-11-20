@@ -31,22 +31,24 @@ class HabitsProvider extends ChangeNotifier {
     );
     AppDatabase.saveHabit(habits[id]!);
 
-    // Schedule notifications for reminders
+    // Update UI immediately
+    notifyListeners();
+
+    // Schedule notifications for reminders in the background
     if (reminders.isNotEmpty) {
       await _notificationService.scheduleHabitReminders(habits[id]!);
     }
-
-    notifyListeners();
   }
 
   Future<void> editHabit(HabitModel habit) async {
     habits[habit.id] = habit;
     AppDatabase.saveHabit(habits[habit.id]!);
 
-    // Reschedule notifications
-    await _notificationService.scheduleHabitReminders(habit);
-
+    // Update UI immediately
     notifyListeners();
+
+    // Reschedule notifications in the background
+    await _notificationService.scheduleHabitReminders(habit);
   }
 
   Future<void> toggleHabitDone({

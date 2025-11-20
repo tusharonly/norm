@@ -42,12 +42,17 @@ class _HabitDetailsPageState extends State<HabitDetailsPage> {
                 color: Colors.black,
                 size: 20,
               ),
-              onPressed: () {
-                AppRouter.pop();
-                AppRouter.push(
-                  CreateOrEditHabitPage(habit: widget.habit),
-                  fullscreenDialog: true,
+              onPressed: () async {
+                final result = await Navigator.of(context).push(
+                  AppRouter.route(
+                    CreateOrEditHabitPage(habit: widget.habit),
+                    fullscreenDialog: true,
+                  ),
                 );
+                // If habit was deleted, pop this page too
+                if (result == true && context.mounted) {
+                  AppRouter.pop();
+                }
               },
             ),
             SizedBox(width: 8),
