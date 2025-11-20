@@ -21,7 +21,7 @@ Norm is a minimal habit tracker that focuses on quick daily logging. The home sc
 
 <div>
   <kbd><img src="screenshots/home_widget_page.png" width="200"></kbd>
-  <kbd><img src="screenshots/home_page.png" width="200"></kbd>
+  <kbd><img src="screenshots/home_list_page.png" width="200"></kbd>
   <kbd><img src="screenshots/create_habit_page.png" width="200"></kbd>
 </div>
 
@@ -31,7 +31,7 @@ Norm is a minimal habit tracker that focuses on quick daily logging. The home sc
   <summary>See full screenshots</summary>
   <div align="center">
     <kbd><img src="screenshots/home_widget_page.png" width="200"></kbd>
-    <kbd><img src="screenshots/home_page.png" width="200"></kbd>
+    <kbd><img src="screenshots/home_list_page.png" width="200"></kbd>
     <kbd><img src="screenshots/create_habit_page.png" width="200"></kbd>
   </div>
 
