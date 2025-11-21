@@ -13,14 +13,9 @@
 
 Norm is a minimal habit tracker that focuses on quick daily logging. The home screen highlights a few recent days for fast updates, while the habit details screen provides the full timeline view for deeper tracking. It is completely ad-free and open source. Built using the [Flutter](https://flutter.dev/) framework, a popular and powerful cross-platform development tool.
 
-<div style="display: flex; align-items: center;">
-  <a href="https://play.google.com/store/apps/details?id=com.tusharghige.norm">
-    <img height="70" src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png">
-  </a>
-  <a href="https://github.com/tusharonly/norm/releases/latest">
-    <img height="80px" src="https://user-images.githubusercontent.com/51419598/202963419-6095ee98-88a5-486f-9c84-a0bd2d8c700e.png">
-  </a>
-</div>
+<a href="https://github.com/tusharonly/norm/releases/latest">
+  <img height="80px" src="https://user-images.githubusercontent.com/51419598/202963419-6095ee98-88a5-486f-9c84-a0bd2d8c700e.png"/>
+</a>
 
 ## How it looks
 
