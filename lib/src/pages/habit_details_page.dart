@@ -49,7 +49,6 @@ class _HabitDetailsPageState extends State<HabitDetailsPage> {
                     fullscreenDialog: true,
                   ),
                 );
-                // If habit was deleted, pop this page too
                 if (result == true && context.mounted) {
                   AppRouter.pop();
                 }
@@ -65,7 +64,6 @@ class _HabitDetailsPageState extends State<HabitDetailsPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               spacing: 16,
               children: [
-                // Description section (only show if description exists)
                 if (widget.habit.description.isNotEmpty)
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),

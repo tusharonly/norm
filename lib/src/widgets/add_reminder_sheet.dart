@@ -83,7 +83,6 @@ class _AddReminderSheetState extends State<AddReminderSheet> {
               ),
             ),
             const SizedBox(height: 20),
-            // Day Selection
             Text(
               'Days',
               style: TextStyle(
@@ -131,7 +130,6 @@ class _AddReminderSheetState extends State<AddReminderSheet> {
               }),
             ),
             SizedBox(height: 16),
-            // Time Selection
             Text(
               'Time',
               style: TextStyle(

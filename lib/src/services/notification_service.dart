@@ -22,56 +22,94 @@ class NotificationService {
   Future<void> initialize() async {
     if (_initialized) return;
 
-    // Initialize timezone data
     tz.initializeTimeZones();
-    final String timeZoneName = await FlutterTimezone.getLocalTimezone();
-    tz.setLocalLocation(tz.getLocation(timeZoneName));
+    final timeZoneInfo = await FlutterTimezone.getLocalTimezone();
+    tz.setLocalLocation(tz.getLocation(timeZoneInfo.identifier));
 
-    // Android initialization settings
     const androidSettings = AndroidInitializationSettings(
       '@mipmap/ic_launcher',
     );
 
-    // iOS initialization settings
-    const iosSettings = DarwinInitializationSettings(
-      requestAlertPermission: true,
-      requestBadgePermission: true,
-      requestSoundPermission: true,
-    );
-
-    const initSettings = InitializationSettings(
-      android: androidSettings,
-      iOS: iosSettings,
-    );
+    const initSettings = InitializationSettings(android: androidSettings);
 
     await _notifications.initialize(initSettings);
+
+    if (Platform.isAndroid) {
+      const AndroidNotificationChannel channel = AndroidNotificationChannel(
+        'habit_reminders',
+        'Habit Reminders',
+        description: 'Notifications for habit reminders',
+        importance: Importance.max,
+      );
+
+      await _notifications
+          .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin
+          >()
+          ?.createNotificationChannel(channel);
+
+      debugPrint('Notification channel created');
+    }
+
     _initialized = true;
+    debugPrint('NotificationService initialized');
   }
 
   Future<bool> requestPermissions() async {
+    debugPrint('📱 Requesting notification permissions...');
+
+    if (!await Permission.notification.isGranted) {
+      debugPrint('Requesting notification permission...');
+      final notificationStatus = await Permission.notification.request();
+      debugPrint('Notification permission: ${notificationStatus.isGranted}');
+
+      if (!notificationStatus.isGranted) {
+        debugPrint('❌ Notification permission denied');
+        return false;
+      }
+    } else {
+      debugPrint('✅ Notification permission already granted');
+    }
+
     if (Platform.isAndroid) {
       final exactAlarmStatus = await Permission.scheduleExactAlarm.status;
+      debugPrint('Exact alarm permission status: $exactAlarmStatus');
+
       if (!exactAlarmStatus.isGranted) {
-        await Permission.scheduleExactAlarm.request();
+        debugPrint('Requesting exact alarm permission...');
+        final result = await Permission.scheduleExactAlarm.request();
+        debugPrint('Exact alarm permission after request: $result');
+
+        if (!result.isGranted) {
+          debugPrint(
+            '⚠️ Exact alarm permission not granted. Scheduled notifications may not work properly.',
+          );
+          return false;
+        }
+      } else {
+        debugPrint('✅ Exact alarm permission already granted');
       }
     }
 
-    if (await Permission.notification.isGranted) {
-      return true;
-    }
-
-    final status = await Permission.notification.request();
-    return status.isGranted;
+    debugPrint('✅ All notification permissions granted');
+    return true;
   }
 
   Future<void> scheduleHabitReminders(HabitModel habit) async {
-    // Cancel existing notifications for this habit first
+    if (!_initialized) {
+      debugPrint('⚠️ NotificationService not initialized. Initializing now...');
+      await initialize();
+    }
+
     await cancelHabitReminders(habit.id);
 
-    // Schedule new notifications
+    debugPrint('Scheduling reminders for habit: ${habit.name}');
     for (final reminder in habit.reminders) {
       await _scheduleReminder(habit, reminder);
     }
+
+    final pending = await getPendingNotifications();
+    debugPrint('Total pending notifications: ${pending.length}');
   }
 
   Future<void> _scheduleReminder(
@@ -95,17 +133,21 @@ class NotificationService {
         reminder.minute,
       );
 
-      // Adjust to the correct day of week
       while (scheduledDate.weekday != day) {
         scheduledDate = scheduledDate.add(const Duration(days: 1));
       }
 
-      // If the scheduled time has passed for this week, schedule for next week
       if (scheduledDate.isBefore(now)) {
         scheduledDate = scheduledDate.add(const Duration(days: 7));
       }
 
       try {
+        debugPrint(
+          'Scheduling notification #$notificationId for ${habit.name} '
+          'on day $day at ${reminder.hour}:${reminder.minute} '
+          '(${scheduledDate.toString()})',
+        );
+
         await _notifications.zonedSchedule(
           notificationId,
           'Norm Reminder: ${habit.name}',
@@ -119,24 +161,21 @@ class NotificationService {
               importance: Importance.high,
               priority: Priority.high,
               color: habit.color,
+              playSound: true,
+              enableVibration: true,
               largeIcon: const DrawableResourceAndroidBitmap(
                 '@mipmap/ic_launcher',
               ),
             ),
-            iOS: const DarwinNotificationDetails(
-              presentAlert: true,
-              presentBadge: true,
-              presentSound: true,
-            ),
           ),
           payload: habit.id,
           androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-          uiLocalNotificationDateInterpretation:
-              UILocalNotificationDateInterpretation.absoluteTime,
           matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
         );
+
+        debugPrint('✅ Notification #$notificationId scheduled successfully');
       } catch (e, stackTrace) {
-        debugPrint('Error scheduling notification: $e');
+        debugPrint('❌ Error scheduling notification #$notificationId: $e');
         debugPrint(stackTrace.toString());
       }
     }
@@ -154,8 +193,6 @@ class NotificationService {
   }
 
   int _generateNotificationId(String habitId, String reminderId, int day) {
-    // Generate a unique notification ID based on habit ID, reminder ID, and day
-    // Using hashCode to convert strings to integers
     final habitHash = habitId.hashCode.abs() % 10000;
     final reminderHash = reminderId.hashCode.abs() % 100;
     return habitHash * 1000 + reminderHash * 10 + day;

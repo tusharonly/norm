@@ -33,7 +33,6 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
 
-    // When app resumes, reload habits from database to sync widget changes
     if (state == AppLifecycleState.resumed) {
       debugPrint('HomePage: App resumed - reloading habits');
       try {

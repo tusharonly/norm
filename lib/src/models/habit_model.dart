@@ -40,7 +40,7 @@ class HabitModel {
 
   int get currentStreak {
     final sortedDates = completions.keys.toList()
-      ..sort((a, b) => b.compareTo(a)); // Newest first
+      ..sort((a, b) => b.compareTo(a)); 
 
     if (sortedDates.isEmpty) return 0;
 
@@ -48,19 +48,16 @@ class HabitModel {
     DateTime now = DateTime.now();
 
     if (interval == HabitInterval.daily) {
-      // Check if today is completed
       bool todayCompleted = isCompletedForDate(now);
       DateTime checkDate = now;
 
       if (!todayCompleted) {
-        // If today is not completed, check yesterday to see if streak is still active
         checkDate = now.subtract(Duration(days: 1));
         if (!isCompletedForDate(checkDate)) {
           return 0;
         }
       }
 
-      // Count backwards
       while (true) {
         if (isCompletedForDate(checkDate)) {
           streak++;
@@ -70,8 +67,6 @@ class HabitModel {
         }
       }
     } else if (interval == HabitInterval.weekly) {
-      // Weekly logic
-      // Check current week
       DateTime currentWeekStart = now.subtract(Duration(days: now.weekday - 1));
       int currentWeekCount = _countCompletionsInPeriod(
         currentWeekStart,
@@ -80,16 +75,11 @@ class HabitModel {
 
       DateTime checkWeekStart = currentWeekStart;
 
-      // If current week is met, we count it.
-      // If not, we don't count it, but we check if we should continue checking previous weeks.
-      // Standard streak logic: if current period is in progress (not met), streak is not broken,
-      // but current period doesn't add to streak yet.
 
       if (currentWeekCount >= targetFrequency) {
         streak++;
       }
 
-      // Move to previous week
       checkWeekStart = checkWeekStart.subtract(Duration(days: 7));
 
       while (true) {
@@ -105,7 +95,6 @@ class HabitModel {
         }
       }
     } else if (interval == HabitInterval.monthly) {
-      // Monthly logic
       DateTime currentMonthStart = DateTime(now.year, now.month, 1);
       DateTime nextMonthStart = DateTime(now.year, now.month + 1, 1);
       int currentMonthCount = _countCompletionsInPeriod(
@@ -119,7 +108,6 @@ class HabitModel {
         streak++;
       }
 
-      // Move to previous month
       checkMonthStart = DateTime(
         checkMonthStart.year,
         checkMonthStart.month - 1,
@@ -156,7 +144,7 @@ class HabitModel {
     final dateFormat = DateFormat('dd-MM-yyyy');
     final sortedDates =
         completions.keys.map((e) => dateFormat.parse(e)).toList()
-          ..sort((a, b) => a.compareTo(b)); // Oldest first
+          ..sort((a, b) => a.compareTo(b)); 
 
     int maxStreak = 0;
     int currentStreak = 0;
@@ -164,7 +152,6 @@ class HabitModel {
     if (interval == HabitInterval.daily) {
       DateTime? lastDate;
       for (var date in sortedDates) {
-        // We know the date is completed because it came from completions keys
         if (lastDate != null && date.difference(lastDate).inDays == 1) {
           currentStreak++;
         } else {
@@ -179,7 +166,6 @@ class HabitModel {
       DateTime firstDate = sortedDates.first;
       DateTime lastDate = sortedDates.last;
 
-      // Align to start of week
       DateTime start = firstDate.subtract(
         Duration(days: firstDate.weekday - 1),
       );
@@ -239,7 +225,6 @@ class HabitModel {
 
   int _countCompletionsInPeriod(DateTime start, DateTime end) {
     int count = 0;
-    // Iterate through days in period
     for (int i = 0; i <= end.difference(start).inDays; i++) {
       DateTime date = start.add(Duration(days: i));
       if (isCompletedForDate(date)) {

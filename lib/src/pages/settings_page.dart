@@ -49,7 +49,6 @@ class _SettingsPageState extends State<SettingsPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Data Management Group
             _buildSettingsGroup(
               title: 'Data Management',
               children: [
@@ -70,7 +69,6 @@ class _SettingsPageState extends State<SettingsPage> {
 
             const SizedBox(height: 24),
 
-            // GitHub Group
             _buildSettingsGroup(
               title: 'Links',
               children: [
@@ -112,7 +110,6 @@ class _SettingsPageState extends State<SettingsPage> {
 
             const SizedBox(height: 24),
 
-            // Version Group
             _buildSettingsGroup(
               title: 'About',
               children: [
@@ -245,7 +242,6 @@ class _SettingsPageState extends State<SettingsPage> {
   Future<void> _exportHabits(BuildContext context) async {
     final provider = context.read<HabitsProvider>();
 
-    // Show loading indicator
     if (!mounted) return;
     Toast.loading(context, 'Exporting habits...');
 
@@ -263,7 +259,6 @@ class _SettingsPageState extends State<SettingsPage> {
   Future<void> _importHabits(BuildContext context) async {
     final provider = context.read<HabitsProvider>();
 
-    // Show loading indicator
     if (!mounted) return;
     Toast.loading(context, 'Importing habits...');
 
@@ -272,10 +267,8 @@ class _SettingsPageState extends State<SettingsPage> {
     if (!mounted) return;
 
     if (error == null) {
-      // Success
       Toast.success(context, 'Habits imported successfully!');
     } else {
-      // Failed
       Toast.error(context, 'Import failed: $error');
     }
   }
@@ -284,7 +277,6 @@ class _SettingsPageState extends State<SettingsPage> {
     try {
       launchUrlString(url);
     } catch (e) {
-      // Handle error silently or show a snackbar
     }
   }
 }

@@ -13,8 +13,6 @@ class HabitsProvider extends ChangeNotifier {
   final _notificationService = NotificationService();
   final _importExportService = ImportExportService();
 
-  /// Reloads habits from the database
-  /// Call this when the app resumes from background to sync widget changes
   void reloadHabits() {
     debugPrint('Reloading habits from database...');
     habits = AppDatabase.getHabits();
@@ -43,13 +41,10 @@ class HabitsProvider extends ChangeNotifier {
     );
     AppDatabase.saveHabit(habits[id]!);
 
-    // Update UI immediately
     notifyListeners();
 
-    // Update widget
     await WidgetService.updateWidget(habits);
 
-    // Schedule notifications for reminders in the background
     if (reminders.isNotEmpty) {
       await _notificationService.scheduleHabitReminders(habits[id]!);
     }
@@ -59,13 +54,10 @@ class HabitsProvider extends ChangeNotifier {
     habits[habit.id] = habit;
     AppDatabase.saveHabit(habits[habit.id]!);
 
-    // Update UI immediately
     notifyListeners();
 
-    // Update widget
     await WidgetService.updateWidget(habits);
 
-    // Reschedule notifications in the background
     await _notificationService.scheduleHabitReminders(habit);
   }
 
@@ -88,25 +80,19 @@ class HabitsProvider extends ChangeNotifier {
     AppDatabase.saveHabit(habits[id]!);
     notifyListeners();
 
-    // Update widget
     await WidgetService.updateWidget(habits);
   }
 
   Future<void> deleteHabit(String id) async {
-    // Cancel all notifications for this habit
     await _notificationService.cancelHabitReminders(id);
 
     habits.remove(id);
     AppDatabase.deleteHabit(id);
     notifyListeners();
 
-    // Update widget
     await WidgetService.updateWidget(habits);
   }
 
-  /// Exports all habits to a JSON file
-  ///
-  /// Returns the file path if successful, null otherwise
   Future<String?> exportHabits() async {
     try {
       final habitsList = habits.values.toList();
@@ -118,21 +104,16 @@ class HabitsProvider extends ChangeNotifier {
     }
   }
 
-  /// Imports habits from a JSON file
-  ///
-  /// Returns null if successful, error message otherwise
   Future<String?> importHabits() async {
     try {
       debugPrint('Starting habit import...');
       final importedHabits = await _importExportService.importHabits();
       debugPrint('Imported ${importedHabits.length} habits');
 
-      // Save all imported habits to database
       for (final habit in importedHabits) {
         habits[habit.id] = habit;
         await AppDatabase.saveHabit(habit);
 
-        // Schedule reminders for habits that have them
         if (habit.reminders.isNotEmpty) {
           await _notificationService.scheduleHabitReminders(habit);
         }
@@ -140,19 +121,16 @@ class HabitsProvider extends ChangeNotifier {
 
       debugPrint('All habits saved to database');
 
-      // Update UI
       notifyListeners();
 
-      // Update widget with imported data
       debugPrint('Updating widget after import...');
       await WidgetService.updateWidget(habits);
 
-      // Add a small delay and update again to ensure it takes effect
       await Future.delayed(const Duration(milliseconds: 200));
       await WidgetService.updateWidget(habits);
       debugPrint('Widget updated after import');
 
-      return null; // Success
+      return null; 
     } catch (e) {
       debugPrint('Error in importHabits: $e');
       return e.toString().replaceFirst('Exception: ', '');

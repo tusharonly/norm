@@ -2,9 +2,9 @@ import 'dart:convert';
 
 class ReminderModel {
   final String id;
-  final int hour; // 0-23
-  final int minute; // 0-59
-  final List<int> selectedDays; // 1-7 (Monday-Sunday)
+  final int hour; 
+  final int minute; 
+  final List<int> selectedDays; 
 
   ReminderModel({
     required this.id,

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:norm/src/theme.dart';
 
-/// Utility class for showing toast messages throughout the app
 class Toast {
-  /// Shows a success toast message with green background
   static void success(BuildContext context, String message) {
     _showToast(
       context,
@@ -13,7 +11,6 @@ class Toast {
     );
   }
 
-  /// Shows an error toast message with red background
   static void error(BuildContext context, String message) {
     _showToast(
       context,
@@ -23,7 +20,6 @@ class Toast {
     );
   }
 
-  /// Shows an info toast message with blue background
   static void info(BuildContext context, String message) {
     _showToast(
       context,
@@ -33,7 +29,6 @@ class Toast {
     );
   }
 
-  /// Shows a warning toast message with orange background
   static void warning(BuildContext context, String message) {
     _showToast(
       context,
@@ -43,7 +38,6 @@ class Toast {
     );
   }
 
-  /// Shows a loading toast message
   static void loading(BuildContext context, String message) {
     _showToast(
       context,
@@ -55,7 +49,6 @@ class Toast {
     );
   }
 
-  /// Internal method to show toast with custom configuration
   static void _showToast(
     BuildContext context, {
     required String message,

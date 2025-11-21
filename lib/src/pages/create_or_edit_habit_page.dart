@@ -4,7 +4,9 @@ import 'package:norm/src/models/habit_model.dart';
 import 'package:norm/src/models/reminder_model.dart';
 import 'package:norm/src/providers/habits_provider.dart';
 import 'package:norm/src/router.dart';
+import 'package:norm/src/services/notification_service.dart';
 import 'package:norm/src/theme.dart';
+import 'package:norm/src/utils/toast.dart';
 import 'package:norm/src/widgets/add_reminder_sheet.dart';
 import 'package:norm/src/widgets/color_picker_row.dart';
 import 'package:norm/src/widgets/input_section.dart';
@@ -61,7 +63,7 @@ class _CreateOrEditHabitPageState extends State<CreateOrEditHabitPage> {
 
   void deleteHabit() {
     context.read<HabitsProvider>().deleteHabit(widget.habit!.id);
-    AppRouter.pop(true); // Return true to indicate deletion
+    AppRouter.pop(true); 
   }
 
   void showDeleteConfirmationDialog() => showDialog(
@@ -332,6 +334,20 @@ class _CreateOrEditHabitPageState extends State<CreateOrEditHabitPage> {
                         ),
                       GestureDetector(
                         onTap: () async {
+                          final notificationService = NotificationService();
+                          final permissionsGranted = 
+                              await notificationService.requestPermissions();
+                          
+                          if (!permissionsGranted) {
+                            if (mounted) {
+                              Toast.error(
+                                context,
+                                'Notification permissions are required for reminders',
+                              );
+                            }
+                            return;
+                          }
+
                           final reminder =
                               await showModalBottomSheet<ReminderModel>(
                                 context: context,

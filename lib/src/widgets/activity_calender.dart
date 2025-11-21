@@ -52,15 +52,12 @@ class _ActivityCalenderState extends State<ActivityCalender> {
       1,
     );
 
-    // Get the first day of the week (Sunday = 0, Monday = 1, etc.)
     final firstWeekDay = firstDayOfMonth.weekday % 7;
 
-    // Start from the first Sunday of the calendar view
     final calendarStart = firstDayOfMonth.subtract(
       Duration(days: firstWeekDay),
     );
 
-    // Generate 42 days (6 weeks) for the calendar
     return List.generate(
       42,
       (index) => calendarStart.add(Duration(days: index)),
@@ -95,7 +92,6 @@ class _ActivityCalenderState extends State<ActivityCalender> {
 
     return Consumer<HabitsProvider>(
       builder: (context, habitsProvider, child) {
-        // Get the updated habit from the provider
         final currentHabit =
             habitsProvider.habits[widget.habit.id] ?? widget.habit;
 
@@ -108,7 +104,6 @@ class _ActivityCalenderState extends State<ActivityCalender> {
             padding: const EdgeInsets.all(16),
             child: Column(
               children: [
-                // Header with month/year and navigation
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -159,7 +154,6 @@ class _ActivityCalenderState extends State<ActivityCalender> {
 
                 const SizedBox(height: 16),
 
-                // Weekday headers
                 Row(
                   children: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
                       .map(
@@ -183,7 +177,6 @@ class _ActivityCalenderState extends State<ActivityCalender> {
 
                 const SizedBox(height: 8),
 
-                // Calendar grid
                 Column(
                   spacing: 4,
                   children: List.generate(
@@ -232,9 +225,9 @@ class _ActivityCalenderState extends State<ActivityCalender> {
                                                         .computeLuminance() >
                                                     0.5
                                                 ? Colors
-                                                      .black // Dark text on light background
+                                                      .black 
                                                 : Colors
-                                                      .white) // White text on dark background
+                                                      .white) 
                                           : isCurrentMonth
                                           ? (isFutureDate
                                                 ? AppColors.secondaryTextColor
@@ -257,7 +250,6 @@ class _ActivityCalenderState extends State<ActivityCalender> {
 
                 const SizedBox(height: 16),
 
-                // Today button
                 Row(
                   children: [
                     TextButton(
