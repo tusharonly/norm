@@ -55,10 +55,21 @@ class _AddReminderSheetState extends State<AddReminderSheet> {
       return;
     }
 
+    final hourOfPeriod = selectedTime.hourOfPeriod;
+    final period = selectedTime.period;
+    final minute = selectedTime.minute;
+    
+    int hour24;
+    if (period == DayPeriod.am) {
+      hour24 = hourOfPeriod == 12 ? 0 : hourOfPeriod;
+    } else {
+      hour24 = hourOfPeriod == 12 ? 12 : hourOfPeriod + 12;
+    }
+
     final reminder = ReminderModel(
       id: const Uuid().v4(),
-      hour: selectedTime.hour,
-      minute: selectedTime.minute,
+      hour: hour24,
+      minute: minute,
       selectedDays: selectedDays.toList()..sort(),
     );
 
