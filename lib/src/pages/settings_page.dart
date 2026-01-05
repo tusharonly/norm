@@ -44,84 +44,86 @@ class _SettingsPageState extends State<SettingsPage> {
           },
         ),
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildSettingsGroup(
-              title: 'Data Management',
-              children: [
-                _buildSettingsTile(
-                  icon: LucideIcons.download,
-                  title: 'Export Habits',
-                  subtitle: 'Save all habits to a file',
-                  onTap: () => _exportHabits(context),
-                ),
-                _buildSettingsTile(
-                  icon: LucideIcons.upload,
-                  title: 'Import Habits',
-                  subtitle: 'Restore habits from a file',
-                  onTap: () => _importHabits(context),
-                ),
-              ],
-            ),
-
-            const SizedBox(height: 24),
-
-            _buildSettingsGroup(
-              title: 'Links',
-              children: [
-                _buildSettingsTile(
-                  icon: LucideIcons.shield,
-                  title: 'Privacy Policy',
-                  subtitle: 'Norm',
-                  onTap: () => _launchUrl(
-                    'https://github.com/tusharonly/norm/blob/main/PRIVACY_POLICY.md',
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildSettingsGroup(
+                title: 'Data Management',
+                children: [
+                  _buildSettingsTile(
+                    icon: LucideIcons.download,
+                    title: 'Export Habits',
+                    subtitle: 'Save all habits to a file',
+                    onTap: () => _exportHabits(context),
                   ),
-                ),
-                _buildSettingsTile(
-                  icon: LucideIcons.bug,
-                  title: 'Report an Issue',
-                  subtitle: 'Help me improve the app',
-                  onTap: () =>
-                      _launchUrl('https://github.com/tusharonly/Norm/issues'),
-                ),
-                _buildSettingsTile(
-                  icon: LucideIcons.github,
-                  title: 'Follow on GitHub',
-                  subtitle: '@tusharonly',
-                  onTap: () => _launchUrl('https://github.com/tusharonly'),
-                ),
-                _buildSettingsTile(
-                  icon: LucideIcons.twitter,
-                  title: 'Follow on X (Twitter)',
-                  subtitle: '@tusharghige',
-                  onTap: () => _launchUrl('https://x.com/tusharghige'),
-                ),
-                _buildSettingsTile(
-                  icon: LucideIcons.externalLink,
-                  title: 'GitHub Repository',
-                  subtitle: 'View source code',
-                  onTap: () => _launchUrl('https://github.com/tusharonly/Norm'),
-                ),
-              ],
-            ),
+                  _buildSettingsTile(
+                    icon: LucideIcons.upload,
+                    title: 'Import Habits',
+                    subtitle: 'Restore habits from a file',
+                    onTap: () => _importHabits(context),
+                  ),
+                ],
+              ),
 
-            const SizedBox(height: 24),
+              const SizedBox(height: 24),
 
-            _buildSettingsGroup(
-              title: 'About',
-              children: [
-                _buildInfoTile(
-                  icon: LucideIcons.smartphone,
-                  title: 'App Version',
-                  subtitle:
-                      ("v${_packageInfo?.version}+${_packageInfo?.buildNumber}"),
-                ),
-              ],
-            ),
-          ],
+              _buildSettingsGroup(
+                title: 'Links',
+                children: [
+                  _buildSettingsTile(
+                    icon: LucideIcons.shield,
+                    title: 'Privacy Policy',
+                    subtitle: 'Norm',
+                    onTap: () => _launchUrl(
+                      'https://github.com/tusharonly/norm/blob/main/PRIVACY_POLICY.md',
+                    ),
+                  ),
+                  _buildSettingsTile(
+                    icon: LucideIcons.bug,
+                    title: 'Report an Issue',
+                    subtitle: 'Help me improve the app',
+                    onTap: () =>
+                        _launchUrl('https://github.com/tusharonly/Norm/issues'),
+                  ),
+                  _buildSettingsTile(
+                    icon: LucideIcons.github,
+                    title: 'Follow on GitHub',
+                    subtitle: '@tusharonly',
+                    onTap: () => _launchUrl('https://github.com/tusharonly'),
+                  ),
+                  _buildSettingsTile(
+                    icon: LucideIcons.twitter,
+                    title: 'Follow on X (Twitter)',
+                    subtitle: '@tusharghige',
+                    onTap: () => _launchUrl('https://x.com/tusharghige'),
+                  ),
+                  _buildSettingsTile(
+                    icon: LucideIcons.externalLink,
+                    title: 'GitHub Repository',
+                    subtitle: 'View source code',
+                    onTap: () => _launchUrl('https://github.com/tusharonly/Norm'),
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 24),
+
+              _buildSettingsGroup(
+                title: 'About',
+                children: [
+                  _buildInfoTile(
+                    icon: LucideIcons.smartphone,
+                    title: 'App Version',
+                    subtitle:
+                        ("v${_packageInfo?.version}+${_packageInfo?.buildNumber}"),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

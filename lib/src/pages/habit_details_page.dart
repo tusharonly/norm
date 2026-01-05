@@ -57,55 +57,57 @@ class _HabitDetailsPageState extends State<HabitDetailsPage> {
             SizedBox(width: 8),
           ],
         ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              spacing: 16,
-              children: [
-                if (widget.habit.description.isNotEmpty)
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Text(
-                      "Description: ${widget.habit.description}",
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: AppColors.secondaryTextColor,
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                spacing: 16,
+                children: [
+                  if (widget.habit.description.isNotEmpty)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Text(
+                        "Description: ${widget.habit.description}",
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: AppColors.secondaryTextColor,
+                        ),
                       ),
                     ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    spacing: 8,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 16.0),
+                        child: Text(
+                          "Activity",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            color: AppColors.primaryTextColor,
+                          ),
+                        ),
+                      ),
+                      ActivityCalender(habit: widget.habit),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 16.0),
+                        child: Text(
+                          "Streaks",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            color: AppColors.primaryTextColor,
+                          ),
+                        ),
+                      ),
+                      StreaksCard(habit: widget.habit),
+                    ],
                   ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  spacing: 8,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 16.0),
-                      child: Text(
-                        "Activity",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          color: AppColors.primaryTextColor,
-                        ),
-                      ),
-                    ),
-                    ActivityCalender(habit: widget.habit),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 16.0),
-                      child: Text(
-                        "Streaks",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          color: AppColors.primaryTextColor,
-                        ),
-                      ),
-                    ),
-                    StreaksCard(habit: widget.habit),
-                  ],
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

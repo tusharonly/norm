@@ -78,173 +78,176 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
         ],
       ),
 
-      body: Consumer<HabitsProvider>(
-        builder: (context, hp, child) {
-          if (hp.habits.isEmpty) {
-            return Center(
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: kToolbarHeight + 16),
-                child: Text(
-                  "Tap + to add your first habit.",
-                  style: TextStyle(color: AppColors.secondaryTextColor),
-                ),
-              ),
-            );
-          }
-          return Padding(
-            padding: const EdgeInsets.only(
-              top: 16.0,
-              left: 16.0,
-              bottom: 16.0,
-              right: 16.0,
-            ),
-            child: ListView(
-              physics: AlwaysScrollableScrollPhysics(),
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      flex: 3,
-                      child: Text(
-                        '',
-                        style: TextStyle(fontSize: 16),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 7,
-                      child: LayoutBuilder(
-                        builder: (context, constraints) {
-                          return Row(
-                            children: List.generate(
-                              7,
-                              (index) {
-                                final isToday = index == 0;
-                                final date = DateTime.now().subtract(
-                                  Duration(days: index),
-                                );
-                                return Container(
-                                  alignment: Alignment.center,
-                                  width: constraints.maxWidth / 7,
-                                  color: AppColors.scaffoldBackgroundColor,
-                                  child: Text(
-                                    DateFormat.E().format(date)[0],
-                                    style: TextStyle(
-                                      color: isToday
-                                          ? AppColors.primaryColor
-                                          : AppColors.secondaryTextColor
-                                                .withValues(alpha: 0.4),
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                );
-                              },
-                            ).reversed.toList(),
-                          );
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 16),
-                Column(
-                  children: List.generate(
-                    hp.habits.length,
-                    (index) {
-                      final habit = hp.habits.values.toList()[index];
 
-                      return Row(
-                        children: [
-                          Expanded(
-                            flex: 3,
-                            child: InkWell(
-                              splashFactory: NoSplash.splashFactory,
-                              highlightColor: Colors.transparent,
-                              hoverColor: Colors.transparent,
-                              focusColor: Colors.transparent,
-                              onTap: () {
-                                AppRouter.push(
-                                  HabitDetailsPage(habit: habit),
-                                  fullscreenDialog: true,
-                                );
-                              },
-                              child: Text(
-                                habit.name,
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                  overflow: TextOverflow.ellipsis,
-                                  color: AppColors.primaryTextColor,
+      body: SafeArea(
+        child: Consumer<HabitsProvider>(
+          builder: (context, hp, child) {
+            if (hp.habits.isEmpty) {
+              return Center(
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: kToolbarHeight + 16),
+                  child: Text(
+                    "Tap + to add your first habit.",
+                    style: TextStyle(color: AppColors.secondaryTextColor),
+                  ),
+                ),
+              );
+            }
+            return Padding(
+              padding: const EdgeInsets.only(
+                top: 16.0,
+                left: 16.0,
+                bottom: 16.0,
+                right: 16.0,
+              ),
+              child: ListView(
+                physics: AlwaysScrollableScrollPhysics(),
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        flex: 3,
+                        child: Text(
+                          '',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 7,
+                        child: LayoutBuilder(
+                          builder: (context, constraints) {
+                            return Row(
+                              children: List.generate(
+                                7,
+                                (index) {
+                                  final isToday = index == 0;
+                                  final date = DateTime.now().subtract(
+                                    Duration(days: index),
+                                  );
+                                  return Container(
+                                    alignment: Alignment.center,
+                                    width: constraints.maxWidth / 7,
+                                    color: AppColors.scaffoldBackgroundColor,
+                                    child: Text(
+                                      DateFormat.E().format(date)[0],
+                                      style: TextStyle(
+                                        color: isToday
+                                            ? AppColors.primaryColor
+                                            : AppColors.secondaryTextColor
+                                                  .withValues(alpha: 0.4),
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ).reversed.toList(),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 16),
+                  Column(
+                    children: List.generate(
+                      hp.habits.length,
+                      (index) {
+                        final habit = hp.habits.values.toList()[index];
+
+                        return Row(
+                          children: [
+                            Expanded(
+                              flex: 3,
+                              child: InkWell(
+                                splashFactory: NoSplash.splashFactory,
+                                highlightColor: Colors.transparent,
+                                hoverColor: Colors.transparent,
+                                focusColor: Colors.transparent,
+                                onTap: () {
+                                  AppRouter.push(
+                                    HabitDetailsPage(habit: habit),
+                                    fullscreenDialog: true,
+                                  );
+                                },
+                                child: Text(
+                                  habit.name,
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                    overflow: TextOverflow.ellipsis,
+                                    color: AppColors.primaryTextColor,
+                                  ),
+                                  maxLines: 1,
                                 ),
-                                maxLines: 1,
                               ),
                             ),
-                          ),
-                          Expanded(
-                            flex: 7,
-                            child: LayoutBuilder(
-                              builder: (context, constraints) {
-                                return Row(
-                                  children: List.generate(
-                                    7,
-                                    (index) {
-                                      final date = DateTime.now().subtract(
-                                        Duration(days: 6 - index),
-                                      );
-                                      final isDone = habit.isCompletedForDate(
-                                        date,
-                                      );
+                            Expanded(
+                              flex: 7,
+                              child: LayoutBuilder(
+                                builder: (context, constraints) {
+                                  return Row(
+                                    children: List.generate(
+                                      7,
+                                      (index) {
+                                        final date = DateTime.now().subtract(
+                                          Duration(days: 6 - index),
+                                        );
+                                        final isDone = habit.isCompletedForDate(
+                                          date,
+                                        );
 
-                                      return InkWell(
-                                        splashFactory: NoSplash.splashFactory,
-                                        highlightColor: Colors.transparent,
-                                        hoverColor: Colors.transparent,
-                                        focusColor: Colors.transparent,
-                                        onTap: () {
-                                          hp.toggleHabitDone(
-                                            id: habit.id,
-                                            date: date,
-                                          );
-                                        },
-                                        child: SizedBox(
-                                          width: constraints.maxWidth / 7,
-                                          height: 35,
-                                          child: Center(
-                                            child: AnimatedContainer(
-                                              duration: Duration(
-                                                milliseconds: 500,
-                                              ),
-                                              curve: Curves.elasticOut,
-                                              width: isDone ? 18 : 8,
-                                              height: isDone ? 18 : 8,
-                                              decoration: BoxDecoration(
-                                                color: habit.color.withValues(
-                                                  alpha: isDone ? 1 : 0.4,
+                                        return InkWell(
+                                          splashFactory: NoSplash.splashFactory,
+                                          highlightColor: Colors.transparent,
+                                          hoverColor: Colors.transparent,
+                                          focusColor: Colors.transparent,
+                                          onTap: () {
+                                            hp.toggleHabitDone(
+                                              id: habit.id,
+                                              date: date,
+                                            );
+                                          },
+                                          child: SizedBox(
+                                            width: constraints.maxWidth / 7,
+                                            height: 35,
+                                            child: Center(
+                                              child: AnimatedContainer(
+                                                duration: Duration(
+                                                  milliseconds: 500,
                                                 ),
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                      isDone ? 4 : 10,
-                                                    ),
+                                                curve: Curves.elasticOut,
+                                                width: isDone ? 18 : 8,
+                                                height: isDone ? 18 : 8,
+                                                decoration: BoxDecoration(
+                                                  color: habit.color.withValues(
+                                                    alpha: isDone ? 1 : 0.4,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                        isDone ? 4 : 10,
+                                                      ),
+                                                ),
                                               ),
                                             ),
                                           ),
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                );
-                              },
+                                        );
+                                      },
+                                    ),
+                                  );
+                                },
+                              ),
                             ),
-                          ),
-                        ],
-                      );
-                    },
+                          ],
+                        );
+                      },
+                    ),
                   ),
-                ),
-              ],
-            ),
-          );
-        },
-      ),
+                ],
+              ),
+            );
+          },
+        ),
+      )
     );
   }
 }
